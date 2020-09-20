@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Smoothie</string>
+    //for landing page
+    <string name="landing">Squeeze Out That CREATIVE Juice !</string>
+    <string name="squeeze">Squeeze</string>
+    //for login page
+    <string name="login">Login</string>
+    <string name="loginEmail">Enter your email</string>
+    <string name="loginPassword">Enter your password</string>
+    <string name="iDontHaveAnAccount">I don\'t have an account</string>
+    //for user register page
+    <string name="createUser">"Create User "</string>
+    <string name="userName">Enter your name</string>
+    <string name="userContact">Enter your phone number</string>
+    <string name="userEmail">Enter your Email</string>
+    <string name="userPassword">Password</string>
+    <string name="create">Create</string>
+</resources>
