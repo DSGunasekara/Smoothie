@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     Button btnCreateUserAccount;
     EditText txtUserName, txtUserContact, txtUserEmail, txtUserPassword;
     ProgressDialog loadingBar;
+    FirebaseAuth fAuth;
 
 
     @Override
@@ -42,7 +45,14 @@ public class RegisterUserActivity extends AppCompatActivity {
         txtUserEmail = findViewById(R.id.txtUserEmail);
         txtUserPassword = findViewById(R.id.txtUserPassword);
 
+        fAuth = FirebaseAuth.getInstance();
+
         loadingBar = new ProgressDialog(this);
+
+        //        if(fAuth.getCurrentUser() != null){
+//            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+//            finish();
+//        }
 
         btnCreateUserAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,16 +93,18 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!(dataSnapshot.child("Users").child(contact).exists())){
-                    HashMap<String, Object> userdataMap = new HashMap<>();
-                    userdataMap.put("contact", contact);
-                    userdataMap.put("email", email);
-                    userdataMap.put("name", name);
-                    userdataMap.put("password", password);
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(!(dataSnapshot.child("Users").child(contact).exists())){
+                            HashMap<String, Object> userdataMap = new HashMap<>();
+                            userdataMap.put("contact", contact);
+                            userdataMap.put("email", email);
+                            userdataMap.put("name", name);
+                            userdataMap.put("password", password);
 
-                    RootRef.child("Users").child(contact).updateChildren(userdataMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            RootRef.child("Users").child(contact).updateChildren(userdataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
@@ -108,15 +120,18 @@ public class RegisterUserActivity extends AppCompatActivity {
                                 }
                             });
 
-                }else{
-                    Toast.makeText(RegisterUserActivity.this, "This "+contact+ " already exists !", Toast.LENGTH_LONG).show();
-                    loadingBar.dismiss();
-                    Toast.makeText(RegisterUserActivity.this, "Please try again using another phone number", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(RegisterUserActivity.this, "This "+contact+ " already exists !", Toast.LENGTH_LONG).show();
+                            loadingBar.dismiss();
+                            Toast.makeText(RegisterUserActivity.this, "Please try again using another phone number", Toast.LENGTH_SHORT).show();
 
-                    Intent intent =  new Intent(RegisterUserActivity.this, MainActivity.class);
-                    startActivity(intent);
+                            Intent intent =  new Intent(RegisterUserActivity.this, MainActivity.class);
+                            startActivity(intent);
 
-                }
+                        }
+                    }
+                });
+
 
             }
 
@@ -125,5 +140,6 @@ public class RegisterUserActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }
