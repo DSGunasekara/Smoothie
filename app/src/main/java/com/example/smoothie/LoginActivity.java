@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     ProgressDialog loadingBar;
     FirebaseAuth fAuth;
+    TextView shopLoginLabel;
 
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe ;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         txtAccountNav = findViewById(R.id.txtIDontHaveAccount);
+        shopLoginLabel = findViewById(R.id.txtShopLoginLable);
         login_contact = findViewById(R.id.login_contact);
         login_password = findViewById(R.id.login_password);
 
@@ -69,6 +71,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        shopLoginLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateShopLogin();
+            }
+        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void loginUser() {
 //        String contact = login_contact.getText().toString();
@@ -181,5 +192,10 @@ public class LoginActivity extends AppCompatActivity {
     public void navigateRegister(){  
         Intent intent = new Intent(this,RegisterUserActivity.class);
         startActivity(intent);
+    }
+
+    public void navigateShopLogin() {
+        Intent i = new Intent(this,ShopLoginActivity.class);
+        startActivity(i);
     }
 }
