@@ -49,7 +49,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         loadingBar = new ProgressDialog(this);
 
-        //        if(fAuth.getCurrentUser() != null){
+//        if(fAuth.getCurrentUser() != null){
 //            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
 //            finish();
 //        }
@@ -68,36 +68,40 @@ public class RegisterUserActivity extends AppCompatActivity {
         String email = txtUserEmail.getText().toString();
         String password = txtUserPassword.getText().toString();
 
-        if(TextUtils.isEmpty(name)){
-            Toast.makeText(this, "Please Enter your name",Toast.LENGTH_LONG).show();
-        }else if(TextUtils.isEmpty(contact)){
-            Toast.makeText(this, "Please Enter your phone number",Toast.LENGTH_LONG).show();
-        }else if(TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Please Enter your email",Toast.LENGTH_LONG).show();
-        }else if(TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Please Enter your password",Toast.LENGTH_LONG).show();
-        }else{
+
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(this, "Please Enter your name", Toast.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(contact)) {
+            Toast.makeText(this, "Please Enter your phone number", Toast.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Please Enter your email", Toast.LENGTH_LONG).show();
+        } else if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Please Enter your password", Toast.LENGTH_LONG).show();
+        } else {
             loadingBar.setTitle("Create Account");
             loadingBar.setMessage("Please wait, while we are checking the account");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            VaildateContactNumber(name, contact, email, password);
+            ValidateContactNumber(name, contact, email, password);
         }
 
     }
 
-    private void VaildateContactNumber(final String name, final String contact, final String email, final String password) {
+
+    private void ValidateContactNumber(final String name, final String contact, final String email, final String password) {
+
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
+
 
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!(dataSnapshot.child("Users").child(contact).exists())){
+                        if (!(dataSnapshot.child("Users").child(contact).exists())) {
                             HashMap<String, Object> userdataMap = new HashMap<>();
                             userdataMap.put("contact", contact);
                             userdataMap.put("email", email);
@@ -107,39 +111,43 @@ public class RegisterUserActivity extends AppCompatActivity {
                             RootRef.child("Users").child(contact).updateChildren(userdataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){
+                                    if (task.isSuccessful()) {
                                         Toast.makeText(RegisterUserActivity.this, "Congratulations, Your account has been created", Toast.LENGTH_SHORT).show();
                                         loadingBar.dismiss();
 
-                                        Intent intent =  new Intent(RegisterUserActivity.this, MainActivity.class);
+                                        Intent intent = new Intent(RegisterUserActivity.this, MainActivity.class);
                                         startActivity(intent);
-                                    }else{
+                                    } else {
                                         loadingBar.dismiss();
                                         Toast.makeText(RegisterUserActivity.this, "Error, Please Try again", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
 
-                        }else{
-                            Toast.makeText(RegisterUserActivity.this, "This "+contact+ " already exists !", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(RegisterUserActivity.this, "This " + contact + " already exists !", Toast.LENGTH_LONG).show();
                             loadingBar.dismiss();
                             Toast.makeText(RegisterUserActivity.this, "Please try again using another phone number", Toast.LENGTH_SHORT).show();
 
-                            Intent intent =  new Intent(RegisterUserActivity.this, MainActivity.class);
+                            Intent intent = new Intent(RegisterUserActivity.this, MainActivity.class);
                             startActivity(intent);
 
                         }
                     }
                 });
 
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
+
+
+
     }
 }
+
+
+

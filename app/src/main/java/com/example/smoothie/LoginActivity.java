@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,9 +42,12 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     ProgressDialog loadingBar;
     FirebaseAuth fAuth;
+    FirebaseUser currentUser;
+    
 
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
 
         fAuth = FirebaseAuth.getInstance();
+        currentUser = fAuth.getCurrentUser();
         chkBoxRememberMe = findViewById(R.id.chkBoxRememberMe);
         Paper.init(this);
 
@@ -157,8 +162,8 @@ public class LoginActivity extends AppCompatActivity {
 
         //this is not working
         if(chkBoxRememberMe.isChecked()){
-            Paper.book().write(Prevalent.UserPhoneKey,contact);
-            Paper.book().write(Prevalent.UserPasswordKey,password);
+           Paper.book().write(Prevalent.UserPhoneKey,contact);
+          Paper.book().write(Prevalent.UserPasswordKey,password);
         }
 
         fAuth.signInWithEmailAndPassword(contact,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -168,6 +173,8 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Logged in successfully",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),HomeActivity.class));
                     loadingBar.dismiss();
+                    //need to check
+                    Prevalent.CurrentOnlineUser  =  currentUser;
 
                 }
                 else{

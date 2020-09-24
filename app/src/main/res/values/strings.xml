@@ -15,4 +15,7 @@
     <string name="userEmail">Enter your Email</string>
     <string name="userPassword">Password</string>
     <string name="create">Create</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="editprof">editProf</string>
 </resources>

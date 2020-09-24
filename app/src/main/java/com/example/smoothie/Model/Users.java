@@ -1,6 +1,8 @@
 package com.example.smoothie.Model;
 
-public class Users {
+import com.google.firebase.auth.FirebaseUser;
+
+public class Users  {
     private String contact;
     private String email;
     private String name;
