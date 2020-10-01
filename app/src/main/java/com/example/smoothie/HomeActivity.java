@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -19,9 +23,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smoothie.Model.Product;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 //import com.rey.material.widget.ImageView;
 //import com.bumptech.glide.Glide;
 
@@ -35,24 +44,44 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     FirebaseAuth fAuth;
 
-    Button btn_logout;
+    private FirebaseFirestore firebaseFirestore;
+    private RecyclerView itemList;
+    private FirestoreRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        itemList = findViewById(R.id.recycler_view);
+
+        Query query = firebaseFirestore.collection("item");
+        FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>().setQuery(query, Product.class).build();
+
+        adapter = new FirestoreRecyclerAdapter<Product, ProductsViewHolder>(options) {
+            @NonNull
+            @Override
+            public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+                return new ProductsViewHolder(view);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ProductsViewHolder holder, int position, @NonNull Product model) {
+                holder.list_name.setText("Name: " + model.getName());
+                holder.list_price.setText("Price: " + model.getPrice());
+                holder.list_description.setText("Description: " + model.getDescription());
+            }
+        };
+
+        itemList.setHasFixedSize(true);
+        itemList.setLayoutManager(new LinearLayoutManager(this));
+        itemList.setAdapter(adapter);
 
         fAuth = FirebaseAuth.getInstance();
         currentUser = fAuth.getCurrentUser();
 
-
-//        btn_logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                logout();
-//            }
-//        });
 
         setUpToolbar();
         navigationView = (NavigationView) findViewById(R.id.navigation_menu);
@@ -122,17 +151,32 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private class ProductsViewHolder extends RecyclerView.ViewHolder{
 
-//    public void logout(){
-//        FirebaseAuth.getInstance().signOut();   //logout
-//        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-//        finish();
-//    }
+        private TextView list_name;
+        private TextView list_price;
+        private TextView list_description;
 
+        public ProductsViewHolder(@NonNull View itemView) {
+            super(itemView);
 
+            list_name = itemView.findViewById(R.id.txtName);
+            list_price = itemView.findViewById(R.id.txtPrice);
+            list_description = itemView.findViewById(R.id.txtDescription);
+        }
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
+    }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 }
 
 

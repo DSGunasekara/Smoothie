@@ -14,7 +14,6 @@
         android:background="#F7FFFFFF"
         android:layout_height="wrap_content">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,16 +28,14 @@
                 app:subtitleTextColor="#0A0A0A"
                 app:titleTextColor="#111111" />
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Hello world"/>
-            <!--    Your code here -->
-
-
         </LinearLayout>
+
     </ScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"
+        ></androidx.recyclerview.widget.RecyclerView>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_menu"
         android:layout_width="match_parent"
@@ -47,4 +44,5 @@
         app:headerLayout="@layout/header"
         app:menu="@menu/drawer_menu">
     </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>
