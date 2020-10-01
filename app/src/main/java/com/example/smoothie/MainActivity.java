@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnSqueeze = findViewById(R.id.btnSqueeze);
+        btnSqueeze = findViewById(R.id.btnSave);
         fAuth = FirebaseAuth.getInstance();
         Paper.init(this);  //for remember me
 

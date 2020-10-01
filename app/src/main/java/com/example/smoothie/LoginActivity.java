@@ -171,10 +171,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(LoginActivity.this,"Logged in successfully",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                    navigateCustomerProfile();
                     loadingBar.dismiss();
                     //need to check
-                    Prevalent.CurrentOnlineUser  =  currentUser;
+                    //Prevalent.CurrentOnlineUser  =  currentUser;
 
                 }
                 else{
@@ -189,4 +189,13 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this,RegisterUserActivity.class);
         startActivity(intent);
     }
+
+
+    public void navigateCustomerProfile(){
+        Intent intent2 = new Intent(this,UserProfile.class);
+        startActivity(intent2);
+    }
+
+
+
 }

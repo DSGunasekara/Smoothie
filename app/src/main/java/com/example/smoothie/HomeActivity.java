@@ -21,8 +21,8 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.rey.material.widget.ImageView;
-import com.bumptech.glide.Glide;
+//import com.rey.material.widget.ImageView;
+//import com.bumptech.glide.Glide;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     FirebaseAuth fAuth;
 
-    //Button btn_logout;
+    Button btn_logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +45,13 @@ public class HomeActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         currentUser = fAuth.getCurrentUser();
 
-        //btn_logout = findViewById(R.id.btn_logout);
 
 //        btn_logout.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
-//                navigateRegister();
+//            public void onClick(View view) {
+//                logout();
 //            }
 //        });
-
 
         setUpToolbar();
         navigationView = (NavigationView) findViewById(R.id.navigation_menu);
@@ -68,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_Profile:
-                        Intent intent1 = new Intent(HomeActivity.this, CustomerProfile.class);
+                        Intent intent1 = new Intent(HomeActivity.this, UserProfile.class);
                         startActivity(intent1);
                         break;
 
@@ -98,6 +96,8 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
         //to retrieve name of the logged user in the navigation header // but this is not working :-(
 //        View HeaderView = navigationView.getHeaderView(0);
 //        TextView userNameTextView = HeaderView.findViewById(R.id.header_userName);
@@ -106,6 +106,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
 
     public void setUpToolbar() {
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -117,23 +118,17 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-//    public void updateNavHeader() {
-//
-//
-//        View headerView = navigationView.getHeaderView(0);
-//        TextView navUsername = headerView.findViewById(R.id.header_userName);
-//        TextView navUserMail = headerView.findViewById(R.id.nav_user_mail);
-//        ImageView navUserPhot = headerView.findViewById(R.id.nav_user_photo);
-//
-//        navUsername.setText(currentUser.getEmail());
-//
-//        // now we will use Glide to load user image
-//        // first we need to import the library
-//
-//
-//
-//
+
+//    public void logout(){
+//        FirebaseAuth.getInstance().signOut();   //logout
+//        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+//        finish();
 //    }
+
+
+
+
+
 }
 
 

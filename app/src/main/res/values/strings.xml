@@ -18,4 +18,10 @@
     <string name="phone">Phone</string>
     <string name="email">Email</string>
     <string name="editprof">editProf</string>
+    <string name="save">save</string>
+    <string name="Name">edit_name</string>
+    <string name="name">Name</string>
+    <string name="joey_trib">Joey Trib</string>
+    <string name="joey_gmail_com">joey@gmail.com</string>
+    <string name="ed_phone">+1-202-555-0157</string>
 </resources>
