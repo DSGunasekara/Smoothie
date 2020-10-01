@@ -24,4 +24,8 @@
     <string name="joey_trib">Joey Trib</string>
     <string name="joey_gmail_com">joey@gmail.com</string>
     <string name="ed_phone">+1-202-555-0157</string>
+    <string name="add_juice">Add Juice</string>
+    <string name="juice_name">Juice Name</string>
+    <string name="price">Price</string>
+    <string name="description">Description</string>
 </resources>

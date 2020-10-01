@@ -190,12 +190,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-    public void navigateCustomerProfile(){
-        Intent intent2 = new Intent(this,UserProfile.class);
-        startActivity(intent2);
-    }
-
+    
     public void navigateHome(){
         startActivity(new Intent(this,HomeActivity.class));
 
