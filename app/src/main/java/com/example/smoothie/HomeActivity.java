@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,10 +67,13 @@ public class HomeActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_Profile:
-                        Intent intent1 = new Intent(HomeActivity.this, UserProfile.class);
-                        startActivity(intent1);
+                        startActivity(new Intent(HomeActivity.this, UserProfile.class));
                         break;
-
+                    case R.id.nav_logout:
+                        FirebaseAuth.getInstance().signOut();
+                        Toast.makeText(HomeActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                        break;
 
 //Paste your privacy policy link
 
