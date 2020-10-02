@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,10 +69,20 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull ProductsViewHolder holder, int position, @NonNull Product model) {
+            protected void onBindViewHolder(@NonNull final ProductsViewHolder holder, int position, @NonNull final Product model) {
                 holder.list_name.setText("Name: " + model.getName());
                 holder.list_price.setText("Price: " + model.getPrice());
                 holder.list_description.setText("Description: " + model.getDescription());
+                holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(HomeActivity.this, Order.class);
+                        intent.putExtra("name", model.getName());
+                        intent.putExtra("price", model.getPrice());
+                        intent.putExtra("description", model.getDescription());
+                        startActivity(intent);
+                    }
+                });
             }
         };
 
@@ -156,6 +167,7 @@ public class HomeActivity extends AppCompatActivity {
         private TextView list_name;
         private TextView list_price;
         private TextView list_description;
+        private RelativeLayout parentLayout;
 
         public ProductsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -163,6 +175,7 @@ public class HomeActivity extends AppCompatActivity {
             list_name = itemView.findViewById(R.id.txtName);
             list_price = itemView.findViewById(R.id.txtPrice);
             list_description = itemView.findViewById(R.id.txtDescription);
+            parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
 
