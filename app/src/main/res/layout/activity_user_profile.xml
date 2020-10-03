@@ -52,31 +52,6 @@ android:paddingBottom="20dp">
     android:textSize="32sp" />
 
 
-    <ImageView
-        android:id="@+id/btnEditProfile"
-        android:layout_width="88dp"
-        android:layout_height="93dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="7dp"
-        android:adjustViewBounds="false"
-        android:contentDescription="@string/editprof"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_baseline_edit_24" />
-
-    <ImageView
-        android:id="@+id/btnDelet"
-        android:layout_width="88dp"
-        android:layout_height="93dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="14dp"
-        android:contentDescription="@string/editprof"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_baseline_delete_24" />
-
     <!--    android:layout_alignParentTop="true"-->
 <!--    android:layout_alignParentRight="true"-->
 <!--    android:layout_marginTop="20dp"-->
@@ -94,145 +69,128 @@ android:layout_below="@id/rellay1"
 android:orientation="horizontal"/>
 
 
-<RelativeLayout
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:layout_below="@+id/linlay1">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="325dp"
+        android:layout_below="@+id/linlay1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="170dp">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:layout_marginLeft="30dp"
-    android:layout_marginRight="30dp"
-    android:layout_marginTop="20dp"
-    android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_EditProfEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="joey@sharenofood.com"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_EditprofPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="+1-202-555-0157"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="187dp"
+        android:layout_height="114dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginBottom="57dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"
-            android:textColor="@color/headings"
-            android:textSize="13sp" />
+        <ImageView
+            android:id="@+id/btnEditProfile"
+            android:layout_width="88dp"
+            android:layout_height="93dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="7dp"
+            android:adjustViewBounds="false"
+            android:contentDescription="@string/editprof"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_baseline_edit_24" />
 
-        <TextView
-            android:id="@+id/tv_EditProfEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:text="joey@sharenofood.com"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/grey" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/phone"
-            android:textColor="@color/headings"
-            android:textSize="13sp" />
-
-
-        <TextView
-            android:id="@+id/tv_EditprofPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:text="+1-202-555-0157"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/grey" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Twitter"
-            android:textColor="@color/headings"
-            android:textSize="13sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:text="twitterUsername"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/grey" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Facebook"
-            android:textColor="@color/headings"
-            android:textSize="13sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:text="facebook.com/joeytrib"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/grey" />
-
+        <ImageView
+            android:id="@+id/btnDelete"
+            android:layout_width="73dp"
+            android:layout_height="82dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="14dp"
+            android:contentDescription="@string/editprof"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_baseline_delete_24" />
     </LinearLayout>
 
 
-</LinearLayout>
+
 
 </RelativeLayout>
 
-    </RelativeLayout>
+
+
+
+

@@ -50,14 +50,18 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="529dp"
+        android:layout_width="wrap_content"
+        android:layout_height="340dp"
 
+        android:layout_above="@+id/btn_save"
+        android:layout_below="@+id/rellay1"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="-4dp"
-        android:layout_marginEnd="-1dp"
-        android:layout_marginBottom="-2dp">
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="-2dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="15dp">
 
         <LinearLayout
             android:layout_width="338dp"
@@ -142,7 +146,7 @@
                 <EditText
                     android:id="@+id/ed_editProfPhone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="077123456"
                     android:textColor="#000000"
@@ -154,18 +158,20 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="164dp"
-            android:layout_marginEnd="164dp"
-            android:layout_marginBottom="75dp"
-            android:text="Save" />
-
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="170dp"
+        android:layout_marginEnd="158dp"
+        android:layout_marginBottom="47dp"
+        android:text="Save" />
+
+
+
 
 </RelativeLayout>
