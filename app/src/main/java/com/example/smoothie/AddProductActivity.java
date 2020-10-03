@@ -118,7 +118,7 @@ public class AddProductActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     Uri downloaduri = uri;
 
-                                    DocumentReference documentReference = fStore.collection("Products").document();
+                                    DocumentReference documentReference = fStore.collection("item").document();
 
                                     HashMap<String, Object> map = new HashMap<>();
                                     map.put("name", name);
