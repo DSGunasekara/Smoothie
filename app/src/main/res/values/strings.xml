@@ -30,4 +30,13 @@
     <string name="description">Description</string>
     <string name="order">Order</string>
     <string name="amount">Amount</string>
+    // Add product
+
+    <string name="productDescription">Enter product description</string>
+    <string name="productPrice">Enter product price</string>
+    <string name="productName">Enter product name</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+
 </resources>
