@@ -3,23 +3,18 @@ package com.example.smoothie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,17 +22,14 @@ import android.widget.Toast;
 import com.example.smoothie.Model.Product;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-//import com.rey.material.widget.ImageView;
-//import com.bumptech.glide.Glide;
 
-
-public class HomeActivity extends AppCompatActivity {
-
+public class ShopProductList extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -45,27 +37,44 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     FirebaseAuth fAuth;
 
+    FloatingActionButton BtnAddItem;
+
+
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView itemList;
     private FirestoreRecyclerAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_shop_product_list);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         itemList = findViewById(R.id.recycler_view);
+        BtnAddItem = findViewById(R.id.BtnAddItem);
+
+
+
 
         Query query = firebaseFirestore.collection("item");
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>().setQuery(query, Product.class).build();
 
-        adapter = new FirestoreRecyclerAdapter<Product, ProductsViewHolder>(options) {
+        BtnAddItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateAddProduct();
+            }
+        });
+
+
+        adapter = new FirestoreRecyclerAdapter<Product, ShopProductList.ProductsViewHolder>(options) {
+
             @NonNull
             @Override
-            public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public ShopProductList.ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
-                return new ProductsViewHolder(view);
+                return new ShopProductList.ProductsViewHolder(view);
             }
 
             @Override
@@ -76,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(HomeActivity.this, Order.class);
+                        Intent intent = new Intent(ShopProductList.this, Item.class);
                         intent.putExtra("name", model.getName());
                         intent.putExtra("price", model.getPrice());
                         intent.putExtra("description", model.getDescription());
@@ -102,17 +111,17 @@ public class HomeActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
 
-                        Intent intent = new Intent(HomeActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(ShopProductList.this, HomeActivity.class);
                         startActivity(intent);
                         break;
 
                     case R.id.nav_Profile:
-                        startActivity(new Intent(HomeActivity.this, UserProfile.class));
+                        startActivity(new Intent(ShopProductList.this, UserProfile.class));
                         break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
-                        Toast.makeText(HomeActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                        Toast.makeText(ShopProductList.this, "Logged Out", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ShopProductList.this, LoginActivity.class));
                         break;
 
 //Paste your privacy policy link
@@ -162,7 +171,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    class ProductsViewHolder extends RecyclerView.ViewHolder{
+    private class ProductsViewHolder extends RecyclerView.ViewHolder{
 
         private TextView list_name;
         private TextView list_price;
@@ -177,7 +186,11 @@ public class HomeActivity extends AppCompatActivity {
             list_description = itemView.findViewById(R.id.txtDescription);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
+
+
     }
+
+
 
     @Override
     protected void onStop() {
@@ -190,7 +203,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onStart();
         adapter.startListening();
     }
+
+    public void navigateAddProduct(){
+        Intent intent = new Intent(this,AddProductActivity.class);
+        startActivity(intent);
+    }
+
 }
-
-
-

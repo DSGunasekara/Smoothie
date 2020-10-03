@@ -11,15 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShopLoginActivity"></activity>
-        <activity android:name=".RegisterShopActivity" />
-        <activity android:name=".HomeActivity" />
         <activity android:name=".Order"></activity>
         <activity android:name=".AddItem" />
         <activity android:name=".EditUserProfile" />
         <activity
             android:name=".UserProfile"
             android:configChanges="orientation|screenSize" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".RegisterUserActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
@@ -29,10 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
