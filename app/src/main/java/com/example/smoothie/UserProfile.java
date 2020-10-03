@@ -196,7 +196,7 @@ public class UserProfile extends AppCompatActivity {
 
 
 
-        //String contact = txtProfPhone.getText();
+//String contact = txtProfPhone.getText();
 
 //        Intent intent = getIntent();
 //        email = intent.getStringExtra("email");

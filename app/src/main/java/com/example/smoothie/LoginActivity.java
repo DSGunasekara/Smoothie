@@ -42,12 +42,12 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     ProgressDialog loadingBar;
     FirebaseAuth fAuth;
+    TextView shopLoginLabel;
     FirebaseUser currentUser;
-    
+
 
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe ;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         txtAccountNav = findViewById(R.id.txtIDontHaveAccount);
+        shopLoginLabel = findViewById(R.id.txtShopLoginLable);
         login_contact = findViewById(R.id.login_contact);
         login_password = findViewById(R.id.login_password);
 
@@ -71,6 +72,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 navigateRegister();
+            }
+        });
+
+        shopLoginLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateShopLogin();
             }
         });
 
@@ -173,8 +181,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Logged in successfully",Toast.LENGTH_SHORT).show();
                     navigateHome();
                     loadingBar.dismiss();
-                    //need to check
-//                    Prevalent.CurrentOnlineUser  =  currentUser;
 
                 }
                 else{
@@ -188,6 +194,11 @@ public class LoginActivity extends AppCompatActivity {
     public void navigateRegister(){  
         Intent intent = new Intent(this,RegisterUserActivity.class);
         startActivity(intent);
+    }
+
+    public void navigateShopLogin() {
+        Intent i = new Intent(this,ShopLoginActivity.class);
+        startActivity(i);
     }
 
 
