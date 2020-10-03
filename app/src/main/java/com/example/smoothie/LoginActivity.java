@@ -70,16 +70,16 @@ public class LoginActivity extends AppCompatActivity {
         txtAccountNav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              navigateRegister();
+                navigateRegister();
             }
         });
 
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loginUser();
-//            }
-//        });
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginUser();
+            }
+        });
 
     }
 
@@ -186,13 +186,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void navigateRegister(){  
-        Intent intent1 = new Intent(this,AddProductActivity.class);
-        startActivity(intent1);
+        Intent intent = new Intent(this,RegisterUserActivity.class);
+        startActivity(intent);
     }
 
 
     public void navigateHome(){
-        startActivity(new Intent(this,ShopProductList.class));
+        startActivity(new Intent(this,HomeActivity.class));
 
     }
 
