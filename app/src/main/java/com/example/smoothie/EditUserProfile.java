@@ -106,10 +106,10 @@ public class EditUserProfile extends AppCompatActivity {
             }
         });
 
+
         editEmail.setText(email);
         editContact.setText(contact);
         editName.setText(name);
-
         Log.d(TAG,"onCreate: " +name + " " +email+ " " +contact);
 
 

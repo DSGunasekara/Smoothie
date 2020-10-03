@@ -44,33 +44,31 @@
     <Button
         android:id="@+id/btnDelete"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/juiceDescription"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="211dp"
-        android:layout_marginEnd="230dp"
-        android:background="@color/colorAccent"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="301dp"
+        android:layout_marginEnd="233dp"
+        android:background="@drawable/button_next"
         android:text="@string/delete"
         android:textAllCaps="false"
         android:textColor="#FFF" />
 
-
-
     <Button
         android:id="@+id/btnUpdate"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
+        android:layout_width="121dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnDelete"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="282dp"
-        android:layout_marginTop="-56dp"
-        android:layout_marginEnd="35dp"
-        android:background="@color/colorAccent"
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="-47dp"
+        android:layout_marginEnd="46dp"
+        android:background="@drawable/button_next"
         android:text="@string/update"
         android:textAllCaps="false"
         android:textColor="#FFF" />
