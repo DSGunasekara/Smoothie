@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.smoothie">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,6 +14,12 @@
         <activity android:name=".ShopLoginActivity"></activity>
         <activity android:name=".RegisterShopActivity" />
         <activity android:name=".HomeActivity" />
+        <activity android:name=".Order"></activity>
+        <activity android:name=".AddItem" />
+        <activity android:name=".EditUserProfile" />
+        <activity
+            android:name=".UserProfile"
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".RegisterUserActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
