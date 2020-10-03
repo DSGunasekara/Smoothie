@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Order"
+    tools:context=".OrderActivity"
     android:padding="10dp"
     android:id="@+id/orderLayout">
 
@@ -42,8 +42,7 @@
 
 
     <Button
-        android:id="@+id/btnAmountAdd"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        android:id="@+id/btnAmountNeg"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/juiceDescription"
@@ -53,38 +52,38 @@
         android:layout_marginTop="75dp"
         android:layout_marginEnd="309dp"
         android:background="@color/colorAccent"
-        android:text="+"
+        android:text="-"
         android:textAllCaps="false"
         android:textColor="#FFF" />
 
     <Button
-        android:id="@+id/btnAmountNeg"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:id="@+id/btnAmountAdd"
+        android:layout_width="64dp"
+        android:layout_height="28dp"
         android:layout_below="@+id/juiceDescription"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="324dp"
+        android:layout_marginStart="315dp"
         android:layout_marginTop="75dp"
         android:layout_marginEnd="22dp"
         android:background="@color/colorAccent"
-        android:text="-"
-        android:textSize="16dp"
+        android:text="+"
         android:textAllCaps="false"
-        android:textColor="#FFF"/>
+        android:textColor="#FFF"
+        android:textSize="16dp" />
 
 
     <TextView
         android:id="@+id/juiceAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btnAmountAdd"
-        android:layout_alignBottom="@+id/btnAmountAdd"
+        android:layout_alignStart="@+id/btnAmountNeg"
+        android:layout_alignBottom="@+id/btnAmountNeg"
         android:layout_marginStart="175dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="3dp"
-        android:layout_toEndOf="@+id/btnAmountAdd"
+        android:layout_toEndOf="@+id/btnAmountNeg"
         android:textSize="16dp" />
 
     <Button
@@ -92,7 +91,7 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnAmountAdd"
+        android:layout_below="@+id/btnAmountNeg"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="106dp"
@@ -107,13 +106,13 @@
         android:id="@+id/juiceTotAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/btnAmountAdd"
-        android:layout_alignBottom="@+id/btnAmountAdd"
+        android:layout_alignStart="@+id/btnAmountNeg"
+        android:layout_alignBottom="@+id/btnAmountNeg"
         android:layout_marginStart="92dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="-47dp"
-        android:layout_toEndOf="@+id/btnAmountAdd"
+        android:layout_toEndOf="@+id/btnAmountNeg"
         android:textSize="16dp" />
 
 </RelativeLayout>

@@ -9,16 +9,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -76,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(HomeActivity.this, Order.class);
+                        Intent intent = new Intent(HomeActivity.this, OrderActivity.class);
                         intent.putExtra("name", model.getName());
                         intent.putExtra("price", model.getPrice());
                         intent.putExtra("description", model.getDescription());
@@ -113,6 +109,10 @@ public class HomeActivity extends AppCompatActivity {
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(HomeActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                        break;
+
+                    case R.id.nav_previousOrders:
+                        startActivity(new Intent(HomeActivity.this, CartActivity.class));
                         break;
 
 //Paste your privacy policy link
