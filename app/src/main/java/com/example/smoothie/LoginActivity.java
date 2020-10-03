@@ -38,11 +38,12 @@ public class LoginActivity extends AppCompatActivity {
                     //**
                         //**
     EditText login_contact, login_password;
-    TextView txtAccountNav;
+    TextView txtAccountNav , txtNavigateShopAcc;
     Button btnLogin;
     ProgressDialog loadingBar;
     FirebaseAuth fAuth;
     FirebaseUser currentUser;
+
     
 
     private String parentDbName = "Users";
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         txtAccountNav = findViewById(R.id.txtIDontHaveAccount);
         login_contact = findViewById(R.id.login_contact);
         login_password = findViewById(R.id.login_password);
+        txtNavigateShopAcc = findViewById(R.id.txtShopLogin);
 
         btnLogin = findViewById(R.id.btnLogin);
 
@@ -66,6 +68,13 @@ public class LoginActivity extends AppCompatActivity {
         currentUser = fAuth.getCurrentUser();
         chkBoxRememberMe = findViewById(R.id.chkBoxRememberMe);
         Paper.init(this);
+
+        txtNavigateShopAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateShopAcc();
+            }
+        });
 
         txtAccountNav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +91,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void loginUser() {
 //        String contact = login_contact.getText().toString();
@@ -195,6 +206,13 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this,HomeActivity.class));
 
     }
+
+    private void navigateShopAcc() {
+        Intent intent2 = new Intent(LoginActivity.this,ShopLoginActivity.class);
+        startActivity(intent2);
+
+    }
+
 
 
 }
