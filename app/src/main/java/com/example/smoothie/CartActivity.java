@@ -11,6 +11,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -39,6 +42,9 @@ public class CartActivity extends AppCompatActivity {
     private Order order;
     private FirebaseFirestore fStore;
     private ListView listView;
+    private Button deleteBtn;
+    private int totalPrice = 0;
+    private TextView totalPriceText;
 
     private ArrayList<Order> orders;
     @Override
@@ -46,11 +52,13 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        deleteBtn = findViewById(R.id.orderDelete);
         listView = (ListView) findViewById(R.id.listView);
+        totalPriceText = findViewById(R.id.totalAmount);
 
         fStore = FirebaseFirestore.getInstance();
         orders = new ArrayList<>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         fStore.collection("tempOrder").whereEqualTo("userId", user.getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -60,27 +68,27 @@ public class CartActivity extends AppCompatActivity {
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-//                                orders.add((Order) document.getData());
                                 String name = (String) document.get("name");
                                 int totAmount = Integer.parseInt((String)document.get("tempTotal"));
                                 int price = Integer.parseInt((String) document.get("price"));
                                 int qty = Integer.parseInt((String)document.get("qty"));
-                                order = new Order(name, totAmount, price, qty);
-//                                order = new Order("dilain", 34, 34, 34);
+                                order = new Order(name, totAmount, price, qty, user.getUid(), document.getId());
                                 orders.add(order);
-                                Log.d(TAG, "onComplete: order"+order.getName());
+
+                                totalPrice += totAmount;
+                                Log.d(TAG, "onComplete: order"+ totalPrice);
+
                             }
-                            Log.d(TAG, "onCreate: order sdfffsdsdsdf "+ orders.get(1).getName());
                             OrderListAdapter adapter = new OrderListAdapter(CartActivity.this, R.layout.order_item, orders);
                             listView.setAdapter(adapter);
+                            totalPriceText.setText("Total Price: " + totalPrice);
+
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
 
                     }
                 });
-
-
 
         setUpToolbar();
         navigationView = (NavigationView) findViewById(R.id.navigation_menu);

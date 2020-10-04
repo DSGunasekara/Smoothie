@@ -15,14 +15,9 @@ import com.example.smoothie.Model.Order;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Document;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,14 +89,8 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 orderBtn.setText("Added to cart");
-//                order = new Order(getIntent().getStringExtra("name"), tempTot, Integer.parseInt(getIntent().getStringExtra("price")), qty);
-//                Intent intent = new Intent(OrderActivity.this, CartActivity.class);
-//                intent.putExtra("orderList", order);
-//                startActivity(intent);
-
 
                 userId = fAuth.getCurrentUser().getUid(); //to retrieve uid of the current user
-//                CollectionReference documentReference = fStore.collection("tempOrder");
                 Map<String, Object> order = new HashMap<>();
                 order.put("userId", userId);
                 order.put("name", getIntent().getStringExtra("name"));
