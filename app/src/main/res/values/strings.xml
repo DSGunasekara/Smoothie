@@ -45,7 +45,4 @@
     <string name="description">Description</string>
     <string name="order">Order</string>
     <string name="amount">Amount</string>
-    <string name="hintShopPassword">Password</string>
-    <string name="btnShopLoginLabel">Already have a shop account? Login Here</string>
-    <string name="txtAppNamePro">Smoothies</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.smoothie;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,26 +18,36 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class UserProfile extends AppCompatActivity {
+    public static final String TAG = "TAG";
     ImageView profImage;
     TextView txtProfName, txtProfEmail, txtProfPhone;
-    ImageView btnEditProfile;
+    ImageView btnEditProfile , btnDeleteProfile;
     FirebaseAuth fAuth;
     //FirebaseDatabase firebaseDatabase;
     FirebaseFirestore fStore;
     String userID;
     StorageReference storageReference;
+
+    String EMAIL;
 
     //private String contact;
     //private String phone, password,email;
@@ -55,10 +66,13 @@ public class UserProfile extends AppCompatActivity {
 
         profImage = findViewById(R.id.iv_EditprofImage);
         btnEditProfile = findViewById(R.id.btnEditProfile);
+        btnDeleteProfile = findViewById(R.id.btnDelete);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        EMAIL = String.valueOf(txtProfEmail);
 
         //create directory in firebase storage with user ID
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
@@ -76,6 +90,8 @@ public class UserProfile extends AppCompatActivity {
 
         userID = fAuth.getCurrentUser().getUid();
 
+        //retrieve the user data
+
         DocumentReference documentReference = fStore.collection("Users").document(userID);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -87,8 +103,6 @@ public class UserProfile extends AppCompatActivity {
                 }else{
                     Log.d("tag","onEvent: document do not exists");
                 }
-
-
             }
         });
 
@@ -99,11 +113,12 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(view.getContext(),EditUserProfile.class);
-                startActivity(intent);
-
                 intent.putExtra("contact",txtProfPhone.getText().toString());
                 intent.putExtra("name",txtProfName.getText().toString());
                 intent.putExtra("email",txtProfEmail.getText().toString());
+                startActivity(intent);
+
+
 
                 //open Gallery
 //                Intent openGalleryIntent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -113,7 +128,55 @@ public class UserProfile extends AppCompatActivity {
 
 
 
+
+
+        //Delete user profile
+        btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore.getInstance().collection("Users")
+                        .whereEqualTo("email", EMAIL)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+                                WriteBatch batch =  FirebaseFirestore.getInstance().batch();
+                                List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
+                                for(DocumentSnapshot snapshot: snapshots){
+                                    batch.delete(snapshot.getReference());
+                                }
+                                batch.commit()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "onSuccess: Delete all docs with email = email");
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e(TAG, "onFailure: ", e);
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+        });
+
+
+
+
     }
+
+//    private void deleteAccount() {
+//        AuthCredential credential = EmailAuthProvider.getCredential();
+//
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

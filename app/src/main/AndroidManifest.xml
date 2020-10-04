@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.smoothie" >
+    package="com.example.smoothie">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,13 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".ShopProfileActivity" >
-        </activity>
-        <activity android:name=".ShopLoginActivity" />
+        android:theme="@style/AppTheme">
+        <activity android:name=".ShopLoginActivity"></activity>
         <activity android:name=".RegisterShopActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".Order" />
+        <activity android:name=".Order"></activity>
         <activity android:name=".AddItem" />
         <activity android:name=".EditUserProfile" />
         <activity
@@ -24,7 +22,7 @@
             android:configChanges="orientation|screenSize" />
         <activity android:name=".RegisterUserActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -125,7 +125,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/txtShopLoginLable"
+        android:id="@+id/txtShopLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txtLoginShopLable"
