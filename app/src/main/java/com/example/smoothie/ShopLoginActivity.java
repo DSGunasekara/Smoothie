@@ -28,7 +28,7 @@ public class ShopLoginActivity extends AppCompatActivity {
     }
 
     public void RegisterShop() {
-        Intent i = new Intent(this, RegisterShopActivity.class);
+        Intent i = new Intent(this, ShopProductList.class);
         startActivity(i);
     }
 }

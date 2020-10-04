@@ -136,26 +136,6 @@ public class AddProductActivity extends AppCompatActivity {
                                     });
 
 
-//                                    FirebaseFirestore.getInstance().collection("product").document("item").set(map)
-//                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                                @Override
-//                                                public void onComplete(@NonNull Task<Void> task) {
-//
-//                                                }
-//                                            }).addOnFailureListener(new OnFailureListener() {
-//                                        @Override
-//                                        public void onFailure(@NonNull Exception e) {
-//                                            Toast.makeText(AddProductActivity.this, ""+ e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                            progressDialog.dismiss();
-//                                        }
-//                                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                        @Override
-//                                        public void onSuccess(Void aVoid) {
-//                                            Toast.makeText(AddProductActivity.this, "Success", Toast.LENGTH_SHORT).show();
-//                                            progressDialog.dismiss();
-//                                        }
-//                                    });
-
                                 }
                             });
 

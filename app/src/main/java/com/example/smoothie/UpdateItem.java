@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class UpdateItem extends AppCompatActivity {
     Button btnSave;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class UpdateItem extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        user = fAuth.getCurrentUser();
+
 
 
 
@@ -64,24 +65,24 @@ public class UpdateItem extends AppCompatActivity {
 
 
 
-                    DocumentReference docRef = fStore.collection("item").document(user.getUid());
+                DocumentReference docRef = fStore.collection("item").document(name);
 
-                    Map<String, Object> edited = new HashMap<>();
-                    edited.put("name", editName.getText().toString());
-                    edited.put("price", editPrice.getText().toString());
-                    edited.put("description", editDescription.getText().toString());
+                Map<String, Object> edited = new HashMap<>();
+                edited.put("name", editName.getText().toString());
+                edited.put("price", editPrice.getText().toString());
+                edited.put("description", editDescription.getText().toString());
 
-                    docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(UpdateItem.this, "Item updated", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                            finish();
+                docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(UpdateItem.this, "Item updated", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        finish();
 
-                        }
+                    }
 
 
-                    });
+                });
 
 
             }
@@ -96,6 +97,3 @@ public class UpdateItem extends AppCompatActivity {
 
     }
 }
-
-
-
