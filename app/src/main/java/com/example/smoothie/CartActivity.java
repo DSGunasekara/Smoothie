@@ -5,11 +5,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 public class CartActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
@@ -32,39 +36,50 @@ public class CartActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
 
-    private TextView tableText;
     private Order order;
     private FirebaseFirestore fStore;
+    private ListView listView;
 
-
+    private ArrayList<Order> orders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        tableText = findViewById(R.id.tableText);
+        listView = (ListView) findViewById(R.id.listView);
 
-        Intent i = getIntent();
         fStore = FirebaseFirestore.getInstance();
-
-//        order = (Order)i.getSerializableExtra("orderList");
+        orders = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        CollectionReference documentReference = fStore.collection("tempOrder");
         fStore.collection("tempOrder").whereEqualTo("userId", user.getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                tableText.setText(document.getData().toString());
                                 Log.d(TAG, document.getId() + " => " + document.getData());
+//                                orders.add((Order) document.getData());
+                                String name = (String) document.get("name");
+                                int totAmount = Integer.parseInt((String)document.get("tempTotal"));
+                                int price = Integer.parseInt((String) document.get("price"));
+                                int qty = Integer.parseInt((String)document.get("qty"));
+                                order = new Order(name, totAmount, price, qty);
+//                                order = new Order("dilain", 34, 34, 34);
+                                orders.add(order);
+                                Log.d(TAG, "onComplete: order"+order.getName());
                             }
+                            Log.d(TAG, "onCreate: order sdfffsdsdsdf "+ orders.get(1).getName());
+                            OrderListAdapter adapter = new OrderListAdapter(CartActivity.this, R.layout.order_item, orders);
+                            listView.setAdapter(adapter);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+
                     }
                 });
+
 
 
         setUpToolbar();
@@ -113,6 +128,9 @@ public class CartActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+//        Log.d(TAG, "onCreate: data", orders.get(0));
 
 
     }

@@ -9,7 +9,7 @@ public class Order implements Serializable {
     private int price;
     private int qty;
 
-    public float getTotAmount() {
+    public int getTotAmount() {
         return totAmount;
     }
 

@@ -106,8 +106,8 @@ public class OrderActivity extends AppCompatActivity {
                 order.put("userId", userId);
                 order.put("name", getIntent().getStringExtra("name"));
                 order.put("price", getIntent().getStringExtra("price"));
-                order.put("qty", qty);
-                order.put("tempTotal",tempTot);
+                order.put("qty", Integer.toString(qty));
+                order.put("tempTotal",Integer.toString(tempTot));
 
                 //insert data into cloud database
                 fStore.collection("tempOrder").add(order).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

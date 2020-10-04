@@ -29,31 +29,14 @@ android:minWidth="19dp">
             app:titleTextColor="#111111" />
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:stretchColumns="1">
-                <TableRow>
-                    <TextView
-                        android:id="@+id/tableText"
-                        android:padding="3dip" />
-                    <TextView
-                        android:text="fds"
-                        android:gravity="right"
-                        android:padding="3dip" />
-                </TableRow>
+            android:layout_height="1080dp">
 
-                <TableRow>
-                    <TextView
-                        android:text="sdfsdfsdf"
-                        android:padding="3dip" />
-                    <TextView
-                        android:text="sdfsdsdf"
-                        android:gravity="right"
-                        android:padding="3dip" />
-                </TableRow>
-            </TableLayout>
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/listView">
+            </ListView>
+
         </RelativeLayout>
 
     </LinearLayout>
