@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CartActivity"></activity>
+        <activity android:name=".AddProductActivity"/>
+        <activity android:name=".Item"/>
         <activity android:name=".ShopLoginActivity" />
         <activity android:name=".RegisterShopActivity" />
         <activity android:name=".ShopProfileActivity"/>
