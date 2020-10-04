@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smoothie.Model.Order;
+import com.example.smoothie.Model.OrderReview;
+import com.example.smoothie.Model.ShopOrder;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,13 +38,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CartActivity extends AppCompatActivity {
+public class ShopOrders extends AppCompatActivity {
 
     private static final String TAG = "TAG";
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
 
+    private OrderReview orderReview;
     private Order order;
     private FirebaseFirestore fStore;
     private ListView listView;
@@ -55,17 +58,16 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
+        setContentView(R.layout.activity_shop_orders);
 
-        orderBtn = findViewById(R.id.submitOrder);
+//        orderBtn = findViewById(R.id.submitOrder);
         listView = (ListView) findViewById(R.id.listView);
         totalPriceText = findViewById(R.id.totalAmount);
-//        final TextView status = findViewById(R.id.status);
 
         fStore = FirebaseFirestore.getInstance();
         orders = new ArrayList<>();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        fStore.collection("tempOrder").whereEqualTo("userId", user.getUid())
+        fStore.collection("tempOrder").whereEqualTo("userId", getIntent().getStringExtra("orderId"))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -85,7 +87,7 @@ public class CartActivity extends AppCompatActivity {
                                 Log.d(TAG, "onComplete: order"+ totalPrice);
 
                             }
-                            OrderListAdapter adapter = new OrderListAdapter(CartActivity.this, R.layout.order_item, orders);
+                            ShopOrderAdapter adapter = new ShopOrderAdapter(ShopOrders.this, R.layout.shop_order_item, orders);
                             listView.setAdapter(adapter);
                             totalPriceText.setText("Total Price: " + totalPrice);
 
@@ -95,51 +97,50 @@ public class CartActivity extends AppCompatActivity {
                     }
                 });
 
-        orderBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ++count;
-                if(count == 1){
-                    int tot = 0;
-                    for(int i = 0; i < orders.size(); i++){
-                        tot += orders.get(i).getTotAmount();
-                        fStore.collection("order").document(orders.get(0).getOrderId()).collection("itemDetail").add(orders.get(i));
-                    }
-                    Map<String, Object> orderDetails = new HashMap<>();
-                    orderDetails.put("totalAmount", Long.toString(tot));
-                    orderDetails.put("userId", orders.get(0).getUserId());
-                    orderDetails.put("ready", false);
-                    orderDetails.put("orderId", orders.get(0).getOrderId());
-                    fStore.collection("order").document(orders.get(0).getOrderId()).set(orderDetails);
-                    Log.d(TAG, "onClick: Total "+ tot);
-                    orderBtn.setText("Order Ready");
-//                    status.setText("Status: Ready");
-
-                    for(int i = 0; i < orders.size(); i++){
-                        fStore.collection("tempOrder").document(orders.get(i).getOrderId())
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error deleting document", e);
-                                    }
-                                });
-                    }
-
-                    Toast.makeText(CartActivity.this, "Order Ready", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(CartActivity.this, HomeActivity.class));
-                }else{
-                    Toast.makeText(CartActivity.this, "Order Placed already", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+//        orderBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ++count;
+//                if(count == 1){
+//                    int tot = 0;
+//                    for(int i = 0; i < orders.size(); i++){
+//                        tot += orders.get(i).getTotAmount();
+//                        fStore.collection("order").document(orders.get(0).getOrderId()).collection("itemDetail").add(orders.get(i));
+//                    }
+//                    Map<String, Object> orderDetails = new HashMap<>();
+//                    orderDetails.put("totalAmount", Long.toString(tot));
+//                    orderDetails.put("userId", orders.get(0).getUserId());
+//                    orderDetails.put("ready", false);
+//                    orderDetails.put("orderId", orders.get(0).getOrderId());
+//                    fStore.collection("order").document(orders.get(0).getOrderId()).set(orderDetails);
+//                    Log.d(TAG, "onClick: Total "+ tot);
+//                    orderBtn.setText("Order Placed");
+//
+//                    for(int i = 0; i < orders.size(); i++){
+//                        fStore.collection("tempOrder").document(orders.get(i).getOrderId())
+//                                .delete()
+//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                    @Override
+//                                    public void onSuccess(Void aVoid) {
+//                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+//                                    }
+//                                })
+//                                .addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.w(TAG, "Error deleting document", e);
+//                                    }
+//                                });
+//                    }
+//
+//                    Toast.makeText(ShopOrders.this, "Order Placed", Toast.LENGTH_SHORT).show();
+//                    startActivity(new Intent(ShopOrders.this, HomeActivity.class));
+//                }else{
+//                    Toast.makeText(ShopOrders.this, "Order Placed already", Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        });
 
         setUpToolbar();
         navigationView = (NavigationView) findViewById(R.id.navigation_menu);
@@ -149,17 +150,17 @@ public class CartActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
 
-                        Intent intent = new Intent(CartActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(ShopOrders.this, HomeActivity.class);
                         startActivity(intent);
                         break;
 
                     case R.id.nav_Profile:
-                        startActivity(new Intent(CartActivity.this, UserProfile.class));
+                        startActivity(new Intent(ShopOrders.this, UserProfile.class));
                         break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
-                        Toast.makeText(CartActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CartActivity.this, LoginActivity.class));
+                        Toast.makeText(ShopOrders.this, "Logged Out", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ShopOrders.this, LoginActivity.class));
                         break;
 
 //Paste your privacy policy link
