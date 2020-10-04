@@ -19,13 +19,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/circle_border">
+            android:layout_marginTop="20dp">
 
             <ImageView
                 android:id="@+id/iv_EditprofImage"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="150dp"
+                android:layout_height="155dp"
                 android:layout_marginStart="9dp"
                 android:layout_marginTop="9dp"
                 android:layout_marginEnd="9dp"
@@ -33,8 +32,7 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle"
                 android:padding="3dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_user" />
+                android:scaleType="centerInside" />
 
         </RelativeLayout>
 
@@ -85,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="Name"
                     android:textColor="@color/headings"
-                    android:textSize="13sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/ed_EditProfName"
@@ -113,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:text="Email"
                     android:textColor="@color/headings"
-                    android:textSize="13sp" />
+                    android:textSize="18sp" />
 
 
                 <EditText
@@ -130,7 +128,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="79dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="0dp"
@@ -141,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:text="Phone"
                     android:textColor="@color/headings"
-                    android:textSize="13sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/ed_editProfPhone"
@@ -162,16 +160,17 @@
 
     <Button
         android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
+        android:layout_width="189dp"
         android:layout_height="wrap_content"
+
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="170dp"
-        android:layout_marginEnd="158dp"
-        android:layout_marginBottom="47dp"
-        android:text="Save" />
-
-
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/button_next"
+        android:text="Save"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

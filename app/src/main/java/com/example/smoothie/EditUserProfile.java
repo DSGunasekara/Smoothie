@@ -21,13 +21,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EditUserProfile extends AppCompatActivity {
@@ -64,6 +68,7 @@ public class EditUserProfile extends AppCompatActivity {
         editEmail = findViewById(R.id.ed_EditprofEmail);
         EditProfileImageView = findViewById(R.id.iv_EditprofImage);
         saveBtn = findViewById(R.id.btn_save);
+        //deleteBtn = findViewById(R.id.btnDelete);
 
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -83,6 +88,45 @@ public class EditUserProfile extends AppCompatActivity {
                 startActivityForResult(openGalleryIntent,1000);
             }
         });
+
+//        //Delete user profile
+//        deleteBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseFirestore.getInstance().collection("Users")
+//                        .whereEqualTo("email", editEmail)
+//                        .get()
+//                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                            @Override
+//                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//
+//                                WriteBatch batch =  FirebaseFirestore.getInstance().batch();
+//                                List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
+//                                for(DocumentSnapshot snapshot: snapshots){
+//                                    batch.delete(snapshot.getReference());
+//                                }
+//                                batch.commit()
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                Log.d(TAG, "onSuccess: Delete all docs with email = email");
+//                                            }
+//                                        }).addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                                Log.e(TAG, "onFailure: ", e);
+//                                    }
+//                                });
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//
+//                    }
+//                });
+//            }
+//        });
+
 
         //update edited user profile data
         saveBtn.setOnClickListener(new View.OnClickListener() {
