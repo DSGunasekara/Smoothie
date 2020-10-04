@@ -3,6 +3,7 @@ package com.example.smoothie;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,23 +16,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class UserProfile extends AppCompatActivity {
+    public static final String TAG = "TAG";
     ImageView profImage;
     TextView txtProfName, txtProfEmail, txtProfPhone;
     ImageView btnEditProfile , btnDeleteProfile;
@@ -41,10 +50,13 @@ public class UserProfile extends AppCompatActivity {
     String userID;
     StorageReference storageReference;
 
+    String EMAIL;
+
     //private String contact;
     //private String phone, password,email;
     //private static final String USERS = "Users";
     // private final String TAG = this.getClass().getName().toUpperCase();
+
 
 
     @Override
@@ -63,6 +75,8 @@ public class UserProfile extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        EMAIL = String.valueOf(txtProfEmail);
 
         //create directory in firebase storage with user ID
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
@@ -117,16 +131,80 @@ public class UserProfile extends AppCompatActivity {
         });
 
 
+
+
+
+        //Delete user profile
+//        btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseFirestore.getInstance().collection("Users")
+//                        .whereEqualTo("email", EMAIL)
+//                        .get()
+//                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                            @Override
+//                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//
+//                                WriteBatch batch =  FirebaseFirestore.getInstance().batch();
+//                                List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
+//                                for(DocumentSnapshot snapshot: snapshots){
+//                                    batch.delete(snapshot.getReference());
+//                                }
+//                                batch.commit()
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                                Log.d(TAG, "onSuccess: Delete all docs with email = email");
+//                                            }
+//                                        }).addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.e(TAG, "onFailure: ", e);
+//                                    }
+//                                });
+//                            }
+//                        }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//
+//                    }
+//                });
+//            }
+//        });
+
         btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //deleteAccount();
+                deleteAccount();
             }
         });
 
 
 
 
+
+
+    }
+    private void deleteAccount() {
+        Log.d(TAG, "ingreso a deleteAccount");
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+        currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG,"OK! Works fine!");
+                    startActivity(new Intent(UserProfile.this, MainActivity.class));
+                    finish();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG,"Ocurrio un error durante la eliminación del usuario", e);
+            }
+        });
     }
 
 //    private void deleteAccount() {

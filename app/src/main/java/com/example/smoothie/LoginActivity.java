@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void navigateHome(){
-        startActivity(new Intent(this,HomeActivity.class));
+        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
 
     }
 

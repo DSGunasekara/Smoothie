@@ -45,13 +45,13 @@
     <string name="description">Description</string>
     <string name="order">Order</string>
     <string name="amount">Amount</string>
-    // Add product
-
-    <string name="productDescription">Enter product description</string>
-    <string name="productPrice">Enter product price</string>
-    <string name="productName">Enter product name</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    <string name="update">Update</string>
-
+    <string name="delete">delete</string>
+    <string name="productName">product Name</string>
+    <string name="productPrice">product price</string>
+    <string name="productDescription">product Description</string>
+    <string name="update">update</string>
+    <string name="edit">edit</string>
+    <string name="hintShopPassword">shop password</string>
+    <string name="btnShopLoginLabel">shopLogin</string>
+    <string name="home">home</string>
 </resources>

@@ -21,10 +21,10 @@
         app:srcCompat="@drawable/bg_wave" />
 
     <Button
-        android:id="@+id/btnRegisterShop"
+        android:id="@+id/btnShopReg"
         android:layout_width="196dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="104dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/button_next"
         android:text="@string/btnRegisterShop"
         android:textColor="#000000"
@@ -34,8 +34,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
-        app:layout_constraintVertical_bias="0.849" />
+        app:layout_constraintTop_toBottomOf="@+id/txtShopPwd"
+        app:layout_constraintVertical_bias="0.281" />
 
     <TextView
         android:id="@+id/txtAppName"
@@ -130,7 +130,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/txtEmail"
+        android:id="@+id/txtShopEmail"
         android:layout_width="384dp"
         android:layout_height="60dp"
         android:layout_marginStart="16dp"
@@ -144,4 +144,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLocation"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/txtShopPwd"
+        android:layout_width="384dp"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:hint="@string/hintShopPassword"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtShopEmail"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/btnLoginShopLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnShopLoginLabel"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnShopReg" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
