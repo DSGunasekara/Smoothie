@@ -59,10 +59,10 @@ public class RegisterShopActivity extends AppCompatActivity {
 
 
 
-        if (fAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            finish();
-        }
+//        if (fAuth.getCurrentUser() != null) {
+//            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//            finish();
+//        }
 
         shopLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +115,7 @@ public class RegisterShopActivity extends AppCompatActivity {
 
 
                             shopID = fAuth.getCurrentUser().getUid(); //to retrieve uid of the current user
-                            DocumentReference documentReference = fStore.collection("shop owners").document(shopName.toString());  //create collection as users and create document to user
+                            DocumentReference documentReference = fStore.collection("shop owners").document(shopID);  //create collection as users and create document to user
                             Map<String, Object> shop = new HashMap<>();
                             shop.put("Shop name",shopname);
                             shop.put("owner name",owner);
