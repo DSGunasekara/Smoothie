@@ -72,8 +72,15 @@ public class ShopLoginActivity extends AppCompatActivity {
         noShopAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               startActivity(new Intent(getApplicationContext(),RegisterShopActivity.class));
+               navigateRegister();
             }
         });
     }
+
+    private void navigateRegister() {
+        Intent i = new Intent(this,RegisterShopActivity.class);
+        startActivity(i);
+    }
+
+
 }

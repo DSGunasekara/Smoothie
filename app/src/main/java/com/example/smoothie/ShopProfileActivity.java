@@ -53,19 +53,19 @@ public class ShopProfileActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         //create directory in firebase storage with user ID
-        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(logo);
-
-            }
-        });
+//        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
+//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Picasso.get().load(uri).into(logo);
+//
+//            }
+//        });
 
         userID = fAuth.getCurrentUser().getUid();
 
-        final DocumentReference documentReference = fStore.collection("Users").document(userID);
+        final DocumentReference documentReference = fStore.collection("shop owners").document(shopName.toString());
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {

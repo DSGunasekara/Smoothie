@@ -36,11 +36,11 @@
         android:id="@+id/imgWave"
         android:layout_width="443dp"
         android:layout_height="104dp"
-        android:layout_below="@+id/img"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="53dp"
         android:layout_marginBottom="532dp"
-        app:srcCompat="@drawable/bg_wave" />
+        app:srcCompat="@drawable/bg_wave"
+        tools:ignore="VectorDrawableCompat" />
 
     <ImageView
         android:id="@+id/imgLogo"
