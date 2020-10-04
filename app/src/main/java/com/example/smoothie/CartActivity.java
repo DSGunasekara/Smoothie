@@ -42,7 +42,7 @@ public class CartActivity extends AppCompatActivity {
     private Order order;
     private FirebaseFirestore fStore;
     private ListView listView;
-    private Button deleteBtn;
+    private Button orderBtn;
     private int totalPrice = 0;
     private TextView totalPriceText;
 
@@ -52,7 +52,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        deleteBtn = findViewById(R.id.orderDelete);
+        orderBtn = findViewById(R.id.submitOrder);
         listView = (ListView) findViewById(R.id.listView);
         totalPriceText = findViewById(R.id.totalAmount);
 
@@ -86,9 +86,19 @@ public class CartActivity extends AppCompatActivity {
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
-
                     }
                 });
+
+        orderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int tot = 0;
+                for(int i = 0; i < orders.size(); i++){
+                    tot += orders.get(i).getTotAmount();
+                }
+                Log.d(TAG, "onClick: Total "+ tot);
+            }
+        });
 
         setUpToolbar();
         navigationView = (NavigationView) findViewById(R.id.navigation_menu);
