@@ -186,7 +186,7 @@ public class UserProfile extends AppCompatActivity {
 
     }
     private void deleteAccount() {
-        Log.d(TAG, "ingreso a deleteAccount");
+        Log.d(TAG, "Account Deleted");
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 

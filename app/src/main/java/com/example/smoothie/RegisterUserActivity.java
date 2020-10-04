@@ -86,7 +86,16 @@ public class RegisterUserActivity extends AppCompatActivity {
             Toast.makeText(this, "Please Enter your email", Toast.LENGTH_LONG).show();
         } else if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Please Enter your password", Toast.LENGTH_LONG).show();
-        } else {
+        }else if (password.length() < 8) {
+            txtUserPassword.setError("Password should have minimum 8 characters");
+            return;
+        }else if (contact.length() < 10) {
+            txtUserContact.setError("Contact number should have 10 numbers");
+            return;
+        } else if (contact.length() > 10) {
+            txtUserContact.setError("Contact number cannot have more than 10 numbers");
+            return;
+        }else {
             loadingBar.setTitle("Create Account");
             loadingBar.setMessage("Please wait, while we are checking the account");
             loadingBar.setCanceledOnTouchOutside(false);

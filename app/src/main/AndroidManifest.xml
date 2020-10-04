@@ -14,6 +14,9 @@
         <activity android:name=".CartActivity"></activity>
         <activity android:name=".ShopLoginActivity" />
         <activity android:name=".RegisterShopActivity" />
+        <activity android:name=".ShopProductList" />
+        <activity android:name=".Item" />
+        <activity android:name=".UpdateItem" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".OrderActivity" />
         <activity android:name=".AddItem" />
