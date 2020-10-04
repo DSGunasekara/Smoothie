@@ -111,12 +111,12 @@ public class ShopProductList extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
 
-                        Intent intent = new Intent(ShopProductList.this, HomeActivity.class);
+                        Intent intent = new Intent(ShopProductList.this, ShopProductList.class);
                         startActivity(intent);
                         break;
 
                     case R.id.nav_Profile:
-                        startActivity(new Intent(ShopProductList.this, UserProfile.class));
+                        startActivity(new Intent(ShopProductList.this, ShopProfileActivity.class));
                         break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
