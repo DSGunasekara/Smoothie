@@ -14,14 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -29,6 +34,7 @@ import com.squareup.picasso.Picasso;
 
 public class ShopProfileActivity extends AppCompatActivity {
 
+    private static final String TAG = "TAG";
     TextView appName, shopName, shopLocation, ownerName, shopEmail, shopPhone;
     ImageView logo;
     FirebaseAuth fAuth;
@@ -65,23 +71,49 @@ public class ShopProfileActivity extends AppCompatActivity {
 
         userID = fAuth.getCurrentUser().getUid();
 
-        final DocumentReference documentReference = fStore.collection("shop owners").document(shopName.toString());
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                if(documentSnapshot.exists()) {
-                    ownerName.setText(documentSnapshot.getString("owner"));
-                    shopEmail.setText(documentSnapshot.getString("email"));
-                    shopPhone.setText(documentSnapshot.getString("phone"));
-                    shopName.setText(documentSnapshot.getString("name"));
-                    shopLocation.setText(documentSnapshot.getString("location"));
-                }else{
-                    Log.d("tag","onEvent: document do not exists");
-                }
+//        DocumentReference documentReference = fStore.collection("shop owners").document(shopName.toString());
+//        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+//                if(documentSnapshot.exists()) {
+//                    ownerName.setText(documentSnapshot.getString("owner"));
+//                    shopEmail.setText(documentSnapshot.getString("email"));
+//                    shopPhone.setText(documentSnapshot.getString("phone"));
+//                    shopName.setText(documentSnapshot.getString("name"));
+//                    shopLocation.setText(documentSnapshot.getString("location"));
+//                }else{
+//                    Log.d("tag","onEvent: document do not exists");
+//                }
+//
+//
+//            }
+//        });
 
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-            }
-        });
+        fStore.collection("shop owners")
+                .whereEqualTo("email", user.getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "onComplete: dfdlfjdsfhdslsdilfhsdiofds" + user.getEmail());
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                ownerName.setText("Owner:"+(String)document.get("owner name"));
+                                shopEmail.setText("Email "+(String)document.get("email"));
+                                shopPhone.setText("Phone: "+(String)document.get("phone"));
+                                shopName.setText("Name: "+(String)document.get("Shop name"));
+                                shopLocation.setText("Location: "+(String)document.get("location"));
+
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
 
 

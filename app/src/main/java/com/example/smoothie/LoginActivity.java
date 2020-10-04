@@ -197,7 +197,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void navigateRegister(){  
-        Intent intent1 = new Intent(this,AddProductActivity.class);
+        Intent intent1 = new Intent(this,RegisterUserActivity.class);
         startActivity(intent1);
     }
 

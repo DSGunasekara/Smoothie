@@ -89,43 +89,7 @@ public class EditUserProfile extends AppCompatActivity {
             }
         });
 
-//        //Delete user profile
-//        deleteBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FirebaseFirestore.getInstance().collection("Users")
-//                        .whereEqualTo("email", editEmail)
-//                        .get()
-//                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//
-//                                WriteBatch batch =  FirebaseFirestore.getInstance().batch();
-//                                List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
-//                                for(DocumentSnapshot snapshot: snapshots){
-//                                    batch.delete(snapshot.getReference());
-//                                }
-//                                batch.commit()
-//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                            @Override
-//                                            public void onSuccess(Void aVoid) {
-//                                                Log.d(TAG, "onSuccess: Delete all docs with email = email");
-//                                            }
-//                                        }).addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                                Log.e(TAG, "onFailure: ", e);
-//                                    }
-//                                });
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//
-//                    }
-//                });
-//            }
-//        });
+
 
 
         //update edited user profile data
