@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smoothie.Model.Order;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +34,7 @@ public class OrderActivity extends AppCompatActivity {
     private Button remQty;
     private int qty = 1;
     private int tempTot;
+    private int count = 0;
 //    private Order order;
     private FirebaseFirestore fStore;
     private FirebaseAuth fAuth;
@@ -81,35 +83,45 @@ public class OrderActivity extends AppCompatActivity {
                     amount.setText(Integer.toString(qty));
                     tempTot = qty * Integer.parseInt(getIntent().getStringExtra("price"));
                     totAmount.setText("Total Price: " + tempTot);
+                }else {
+                    Toast.makeText(OrderActivity.this,"Minimum one item is required!",Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+
         orderBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                orderBtn.setText("Added to cart");
+                ++count;
 
-                userId = fAuth.getCurrentUser().getUid(); //to retrieve uid of the current user
-                Map<String, Object> order = new HashMap<>();
-                order.put("userId", userId);
-                order.put("name", getIntent().getStringExtra("name"));
-                order.put("price", getIntent().getStringExtra("price"));
-                order.put("qty", Integer.toString(qty));
-                order.put("tempTotal",Integer.toString(tempTot));
+                if(count == 1){
+                    orderBtn.setText("Added to cart");
 
-                //insert data into cloud database
-                fStore.collection("tempOrder").add(order).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                    userId = fAuth.getCurrentUser().getUid(); //to retrieve uid of the current user
+                    Map<String, Object> order = new HashMap<>();
+                    order.put("userId", userId);
+                    order.put("name", getIntent().getStringExtra("name"));
+                    order.put("price", getIntent().getStringExtra("price"));
+                    order.put("qty", Integer.toString(qty));
+                    order.put("tempTotal",Integer.toString(tempTot));
+
+                    //insert data into cloud database
+                    fStore.collection("tempOrder").add(order).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
                         }
                     });
+                }else {
+                    Toast.makeText(OrderActivity.this,"Order already added",Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });

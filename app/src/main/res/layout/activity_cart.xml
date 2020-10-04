@@ -99,6 +99,7 @@ android:minWidth="19dp">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/submitOrder"
                 android:layout_below="@+id/totalAmount"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
