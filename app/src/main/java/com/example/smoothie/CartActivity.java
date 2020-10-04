@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.smoothie.Model.Order;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +33,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -45,6 +49,7 @@ public class CartActivity extends AppCompatActivity {
     private Button orderBtn;
     private int totalPrice = 0;
     private TextView totalPriceText;
+    private int count = 0;
 
     private ArrayList<Order> orders;
     @Override
@@ -92,11 +97,43 @@ public class CartActivity extends AppCompatActivity {
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int tot = 0;
-                for(int i = 0; i < orders.size(); i++){
-                    tot += orders.get(i).getTotAmount();
+                ++count;
+                if(count == 1){
+                    int tot = 0;
+                    for(int i = 0; i < orders.size(); i++){
+                        tot += orders.get(i).getTotAmount();
+                        fStore.collection("order").document(orders.get(0).getOrderId()).collection("itemDetail").add(orders.get(i));
+                    }
+                    Map<String, Object> orderDetails = new HashMap<>();
+                    orderDetails.put("totalAmount", tot);
+                    orderDetails.put("userId", orders.get(0).getUserId());
+                    fStore.collection("order").document(orders.get(0).getOrderId()).set(orderDetails);
+                    Log.d(TAG, "onClick: Total "+ tot);
+                    orderBtn.setText("Order Placed");
+
+                    for(int i = 0; i < orders.size(); i++){
+                        fStore.collection("tempOrder").document(orders.get(i).getOrderId())
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error deleting document", e);
+                                    }
+                                });
+                    }
+
+                    Toast.makeText(CartActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CartActivity.this, HomeActivity.class));
+                }else{
+                    Toast.makeText(CartActivity.this, "Order Placed already", Toast.LENGTH_SHORT).show();
                 }
-                Log.d(TAG, "onClick: Total "+ tot);
+
             }
         });
 
