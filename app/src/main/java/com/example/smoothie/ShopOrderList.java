@@ -112,7 +112,7 @@ public class ShopOrderList extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
 
-                        Intent intent = new Intent(ShopOrderList.this, ShopOrder.class);
+                        Intent intent = new Intent(ShopOrderList.this, ShopProductList.class);
                         startActivity(intent);
                         break;
 
