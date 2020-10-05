@@ -107,7 +107,7 @@ public class ShopLoginActivity extends AppCompatActivity {
     }
 
     private void navigateHome() {
-        Intent intent = new Intent(ShopLoginActivity.this,ShopProfileActivity.class);
+        Intent intent = new Intent(ShopLoginActivity.this,ShopOrderList.class);
         startActivity(intent);
     }
 

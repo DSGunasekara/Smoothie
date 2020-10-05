@@ -117,7 +117,7 @@ public class ShopOrderList extends AppCompatActivity {
                         break;
 
                     case R.id.nav_previousOrders:
-                        startActivity(new Intent(ShopOrderList.this, CartActivity.class));
+                        startActivity(new Intent(ShopOrderList.this, ShopOrderList.class));
                         break;
 
 //Paste your privacy policy link
