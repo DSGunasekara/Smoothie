@@ -19,14 +19,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShopOrderAdapter extends ArrayAdapter<Order> {
     private static final String TAG = "TAG";
     private Context mContext;
     private int mResource;
-    private ArrayList<Order> orders;
+    private List<Order> orders;
 
-    public ShopOrderAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Order> objects) {
+    public ShopOrderAdapter(@NonNull Context context, int resource, @NonNull List<Order> objects) {
         super(context, resource, objects);
         this.mContext = context;
         this.mResource = resource;

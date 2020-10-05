@@ -37,6 +37,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ShopOrders extends AppCompatActivity {
@@ -55,8 +56,9 @@ public class ShopOrders extends AppCompatActivity {
     private TextView totalPriceText;
     private int count = 0;
 
-    private ArrayList<Order> orders;
+//    private ArrayList<Order> orders;
     private ArrayList<Order> newOrders;
+    List<Order> orders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,19 +84,20 @@ public class ShopOrders extends AppCompatActivity {
                                 String userId = (String) document.get("userId");
                                 String orderId = (String) document.get("orderId");
                                 String totAmount = (String)document.get("totalAmount");
-                                orders = (ArrayList<Order>) document.get("orderList");
+//                                orders = (ArrayList<Order>) document.get("orderList");
 //                                orders.add(order);
-                                orderReview = new OrderReview(orders, userId, totAmount, ready);
+                                 orders = document.toObject(OrderDocument.class).orderList;
+//                                orderReview = new OrderReview(orders, userId, totAmount, ready);
                                 Log.d(TAG, "onComplete: order"+ orders.getClass());
 
                             }
 
-                            for(int i = 0; i < orders.size(); i++){
-//                                Log.d(TAG, "onComplete: dfsjkdf" + orders.get(i).getClass());
-                                    int order1 = orders.get(0).hashCode();
-//                                Order order1 = orders.en;
-                                Log.d(TAG, "onComplete: sdfiufasd "+ order1);
-                            }
+//                            for(int i = 0; i < orders.size(); i++){
+////                                Log.d(TAG, "onComplete: dfsjkdf" + orders.get(i).getClass());
+//                                    int order1 = orders.get(0).hashCode();
+////                                Order order1 = orders.en;
+//                                Log.d(TAG, "onComplete: sdfiufasd "+ order1);
+//                            }
 
 
 
