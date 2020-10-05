@@ -3,13 +3,13 @@ package com.example.smoothie.Model;
 import java.util.ArrayList;
 
 public class OrderReview {
-    private ArrayList<Order> orders;
+    private ArrayList<Order> orderList;
     private String userId;
     private String totalAmount;
     private boolean ready;
 
     public OrderReview(ArrayList<Order> orders, String userId, String totalAmount, boolean ready) {
-        this.orders = orders;
+        this.orderList = orders;
         this.userId = userId;
         this.totalAmount = totalAmount;
         this.ready = ready;
@@ -19,12 +19,12 @@ public class OrderReview {
 
     }
 
-    public ArrayList<Order> getOrders() {
-        return orders;
+    public ArrayList<Order> getOrderList() {
+        return orderList;
     }
 
-    public void setOrders(ArrayList<Order> orders) {
-        this.orders = orders;
+    public void setOrderList(ArrayList<Order> orders) {
+        this.orderList = orders;
     }
 
     public String getUserId() {

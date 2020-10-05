@@ -28,11 +28,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +55,7 @@ public class CartActivity extends AppCompatActivity {
     private int count = 0;
 
     private ArrayList<Order> orders;
+    private ArrayList<Order> newOrders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +66,11 @@ public class CartActivity extends AppCompatActivity {
         totalPriceText = findViewById(R.id.totalAmount);
 //        final TextView status = findViewById(R.id.status);
 
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         fStore = FirebaseFirestore.getInstance();
         orders = new ArrayList<>();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         fStore.collection("tempOrder").whereEqualTo("userId", user.getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -85,6 +91,7 @@ public class CartActivity extends AppCompatActivity {
                                 Log.d(TAG, "onComplete: order"+ totalPrice);
 
                             }
+                            Log.d(TAG, "onComplete: order"+ orders);
                             OrderListAdapter adapter = new OrderListAdapter(CartActivity.this, R.layout.order_item, orders);
                             listView.setAdapter(adapter);
                             totalPriceText.setText("Total Price: " + totalPrice);
@@ -103,16 +110,21 @@ public class CartActivity extends AppCompatActivity {
                     int tot = 0;
                     for(int i = 0; i < orders.size(); i++){
                         tot += orders.get(i).getTotAmount();
-                        fStore.collection("order").document(orders.get(0).getOrderId()).collection("itemDetail").add(orders.get(i));
+                        Log.d(TAG, "onClick: order " +orders.get(i));
+//                        Order order1 = orders.get(i);
+//                        fStore.collection("order").document(orders.get(0).getOrderId()).update("orderList", FieldValue.arrayUnion(order1));
                     }
                     Map<String, Object> orderDetails = new HashMap<>();
                     orderDetails.put("totalAmount", Long.toString(tot));
                     orderDetails.put("userId", orders.get(0).getUserId());
                     orderDetails.put("ready", false);
                     orderDetails.put("orderId", orders.get(0).getOrderId());
+                    orderDetails.put("userEmail", user.getEmail());
+                    orderDetails.put("orderList", orders);
                     fStore.collection("order").document(orders.get(0).getOrderId()).set(orderDetails);
+//                    fStore.collection("order").document(orders.get(0).getOrderId()).update("orderList", FieldValue.arrayUnion(Arrays.asList(orders)));
                     Log.d(TAG, "onClick: Total "+ tot);
-                    orderBtn.setText("Order Ready");
+                    orderBtn.setText("Ordered");
 //                    status.setText("Status: Ready");
 
                     for(int i = 0; i < orders.size(); i++){
@@ -132,7 +144,7 @@ public class CartActivity extends AppCompatActivity {
                                 });
                     }
 
-                    Toast.makeText(CartActivity.this, "Order Ready", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CartActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(CartActivity.this, HomeActivity.class));
                 }else{
                     Toast.makeText(CartActivity.this, "Order Placed already", Toast.LENGTH_SHORT).show();

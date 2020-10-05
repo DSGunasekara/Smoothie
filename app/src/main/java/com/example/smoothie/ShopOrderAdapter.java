@@ -24,7 +24,7 @@ public class ShopOrderAdapter extends ArrayAdapter<Order> {
     private static final String TAG = "TAG";
     private Context mContext;
     private int mResource;
-    private ArrayList<Order> orders = new ArrayList<Order>();
+    private ArrayList<Order> orders;
 
     public ShopOrderAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Order> objects) {
         super(context, resource, objects);

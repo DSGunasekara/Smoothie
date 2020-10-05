@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import com.google.firebase.firestore.Query;
 public class ShopOrderList extends AppCompatActivity {
 
 
+    private static final String TAG = "TAG";
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
@@ -69,10 +71,17 @@ public class ShopOrderList extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull final ProductsViewHolder holder, int position, @NonNull final ShopOrder model) {
-                holder.list_name.setText("User Email: " + user.getEmail());
+
+                if(model.isReady() == false){
+                    holder.list_ready.setText("Status: Order not complete");
+                }else{
+                    holder.list_ready.setText("Status: Order Complete");
+                }
+
+                holder.list_name.setText("User Email: " + model.getUserEmail());
                 holder.list_price.setText("Price: " + model.getTotalAmount());
-                holder.list_description.setText("Order Id: " + user.getUid());
-                holder.list_ready.setText("Status: " + model.isReady());
+                holder.list_orderId.setText("Order Id: " + model.getOrderId());
+
                 holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -171,7 +180,7 @@ public class ShopOrderList extends AppCompatActivity {
 
         private TextView list_name;
         private TextView list_price;
-        private TextView list_description;
+        private TextView list_orderId;
         private TextView list_ready;
         private RelativeLayout parentLayout;
 
@@ -180,7 +189,7 @@ public class ShopOrderList extends AppCompatActivity {
 
             list_name = itemView.findViewById(R.id.shopTxtName);
             list_price = itemView.findViewById(R.id.shopTxtPrice);
-            list_description = itemView.findViewById(R.id.shopTxtOrderId);
+            list_orderId = itemView.findViewById(R.id.shopTxtOrderId);
             list_ready = itemView.findViewById(R.id.shopTxtReady);
             parentLayout = itemView.findViewById(R.id.shop_parent_layout);
         }

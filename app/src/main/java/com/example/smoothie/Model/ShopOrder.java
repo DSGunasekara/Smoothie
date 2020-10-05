@@ -4,6 +4,7 @@ public class ShopOrder {
     private String userName;
     private String orderId;
     private String totalAmount;
+    private String userEmail;
     private boolean ready;
 
     public ShopOrder(String userName, String orderId, String totalAmount, boolean ready) {
@@ -15,6 +16,14 @@ public class ShopOrder {
 
     public ShopOrder(){
 
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getUserName() {

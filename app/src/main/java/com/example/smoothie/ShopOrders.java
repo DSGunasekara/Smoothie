@@ -33,6 +33,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,19 +56,20 @@ public class ShopOrders extends AppCompatActivity {
     private int count = 0;
 
     private ArrayList<Order> orders;
+    private ArrayList<Order> newOrders;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_orders);
 
 //        orderBtn = findViewById(R.id.submitOrder);
-        listView = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.shopListView);
         totalPriceText = findViewById(R.id.totalAmount);
 
         fStore = FirebaseFirestore.getInstance();
         orders = new ArrayList<>();
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        fStore.collection("tempOrder").whereEqualTo("userId", getIntent().getStringExtra("orderId"))
+        fStore.collection("order").whereEqualTo("orderId", getIntent().getStringExtra("orderId"))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -75,21 +77,31 @@ public class ShopOrders extends AppCompatActivity {
                         if (task.isSuccessful()) {
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                String name = (String) document.get("name");
-                                int totAmount = Integer.parseInt((String)document.get("tempTotal"));
-                                int price = Integer.parseInt((String) document.get("price"));
-                                int qty = Integer.parseInt((String)document.get("qty"));
-                                order = new Order(name, totAmount, price, qty, user.getUid(), document.getId());
-                                orders.add(order);
-
-                                totalPrice += totAmount;
-                                Log.d(TAG, "onComplete: order"+ totalPrice);
+                                Log.d(TAG, document.getId() + " => gfmfkldgmgjfdgd" + document.getData());
+                                boolean ready = (boolean) document.get("ready");
+                                String userId = (String) document.get("userId");
+                                String orderId = (String) document.get("orderId");
+                                String totAmount = (String)document.get("totalAmount");
+                                orders = (ArrayList<Order>) document.get("orderList");
+//                                orders.add(order);
+                                orderReview = new OrderReview(orders, userId, totAmount, ready);
+                                Log.d(TAG, "onComplete: order"+ orders.getClass());
 
                             }
+
+                            for(int i = 0; i < orders.size(); i++){
+//                                Log.d(TAG, "onComplete: dfsjkdf" + orders.get(i).getClass());
+                                    int order1 = orders.get(0).hashCode();
+//                                Order order1 = orders.en;
+                                Log.d(TAG, "onComplete: sdfiufasd "+ order1);
+                            }
+
+
+
+                            Log.d(TAG, "onComplete: order blah blah "+ orders);
                             ShopOrderAdapter adapter = new ShopOrderAdapter(ShopOrders.this, R.layout.shop_order_item, orders);
                             listView.setAdapter(adapter);
-                            totalPriceText.setText("Total Price: " + totalPrice);
+//                            totalPriceText.setText("Total Price: " + totalPrice);
 
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
