@@ -130,6 +130,7 @@ public class AddProductActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d(TAG, "onSuccess: user profile is created for ");
+                                            navigateProductList();
 
 
                                         }
@@ -147,6 +148,12 @@ public class AddProductActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void navigateProductList() {
+        Intent intent_1 = new Intent(this, ShopProductList.class);
+        startActivity(intent_1);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);

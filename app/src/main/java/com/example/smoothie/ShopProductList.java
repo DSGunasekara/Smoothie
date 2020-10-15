@@ -54,9 +54,6 @@ public class ShopProductList extends AppCompatActivity {
         itemList = findViewById(R.id.recycler_view);
         BtnAddItem = findViewById(R.id.BtnAddItem);
 
-
-
-
         Query query = firebaseFirestore.collection("item");
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>().setQuery(query, Product.class).build();
 
@@ -205,8 +202,8 @@ public class ShopProductList extends AppCompatActivity {
     }
 
     public void navigateAddProduct(){
-        Intent intent = new Intent(this,AddProductActivity.class);
-        startActivity(intent);
+        Intent intent_1 = new Intent(this,AddProductActivity.class);
+        startActivity(intent_1);
     }
 
 }
