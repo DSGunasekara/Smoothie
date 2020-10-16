@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 //import com.rey.material.widget.ImageView;
 //import com.bumptech.glide.Glide;
 
@@ -73,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.list_name.setText("Name: " + model.getName());
                 holder.list_price.setText("Price: " + model.getPrice());
                 holder.list_description.setText("Description: " + model.getDescription());
+                Picasso.get().load(model.getImage()).into(holder.imageM);
 
 
 
@@ -176,6 +178,7 @@ public class HomeActivity extends AppCompatActivity {
         private TextView list_name;
         private TextView list_price;
         private TextView list_description;
+        private ImageView imageM;
 
         private RelativeLayout parentLayout;
 
@@ -186,6 +189,7 @@ public class HomeActivity extends AppCompatActivity {
             list_price = itemView.findViewById(R.id.txtPrice);
             list_description = itemView.findViewById(R.id.txtDescription);
             parentLayout = itemView.findViewById(R.id.parent_layout);
+            imageM = itemView.findViewById(R.id.product_image);
 
         }
     }
