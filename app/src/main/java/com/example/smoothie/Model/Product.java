@@ -1,5 +1,7 @@
 package com.example.smoothie.Model;
 
+import android.net.Uri;
+
 public class Product {
     private String name;
     private String price;
@@ -34,12 +36,14 @@ public class Product {
         this.description = description;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+
 }
 
