@@ -35,12 +35,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class EditUserProfile extends AppCompatActivity {
 
     public static final String TAG = "TAG";
 
     EditText editName , editContact, editEmail;
-    ImageView EditProfileImageView;
+    CircleImageView EditProfileImageView;
     Button saveBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;

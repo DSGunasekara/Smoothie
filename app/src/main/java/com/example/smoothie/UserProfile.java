@@ -42,9 +42,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserProfile extends AppCompatActivity {
     public static final String TAG = "TAG";
-    ImageView profImage;
+    CircleImageView profImage;
     TextView txtProfName, txtProfEmail, txtProfPhone;
     ImageView btnEditProfile , btnDeleteProfile;
     FirebaseAuth fAuth;
@@ -137,6 +139,7 @@ public class UserProfile extends AppCompatActivity {
                 intent.putExtra("contact",txtProfPhone.getText().toString());
                 intent.putExtra("name",txtProfName.getText().toString());
                 intent.putExtra("email",txtProfEmail.getText().toString());
+
                 startActivity(intent,options.toBundle());
 
 

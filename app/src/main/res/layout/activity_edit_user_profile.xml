@@ -21,19 +21,29 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+
                 android:id="@+id/iv_EditprofImage"
-                android:layout_width="150dp"
-                android:layout_height="155dp"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="9dp"
-                android:adjustViewBounds="true"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FF000000"
                 android:background="@drawable/circle"
-                android:padding="3dp"
-                android:scaleType="centerInside"
                 android:transitionName="example_transition"/>
+
+<!--            <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                android:id="@+id/iv_EditprofImage"-->
+<!--                android:layout_width="150dp"-->
+<!--                android:layout_height="155dp"-->
+<!--                android:layout_marginStart="9dp"-->
+<!--                android:layout_marginTop="9dp"-->
+<!--                android:layout_marginEnd="9dp"-->
+<!--                android:layout_marginBottom="9dp"-->
+<!--                android:adjustViewBounds="true"-->
+<!--                android:background="@drawable/circle"-->
+<!--                android:padding="3dp"-->
+<!--                android:scaleType="centerInside"-->
+<!--                android:transitionName="example_transition"/>-->
 
         </RelativeLayout>
 
@@ -50,7 +60,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="340dp"
+        android:layout_height="368dp"
 
         android:layout_above="@+id/btn_save"
         android:layout_below="@+id/rellay1"
@@ -60,11 +70,11 @@
         android:layout_marginStart="-2dp"
         android:layout_marginTop="71dp"
         android:layout_marginEnd="2dp"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="-3dp">
 
         <LinearLayout
-            android:layout_width="338dp"
-            android:layout_height="222dp"
+            android:layout_width="341dp"
+            android:layout_height="247dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
@@ -145,7 +155,7 @@
                 <EditText
                     android:id="@+id/ed_editProfPhone"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="match_parent"
                     android:fontFamily="sans-serif-light"
                     android:text="077123456"
                     android:textColor="#000000"
