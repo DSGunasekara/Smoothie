@@ -3,6 +3,8 @@ package com.example.smoothie;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.app.Activity;
@@ -10,6 +12,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -64,6 +67,15 @@ public class UserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        Fade fade = new Fade();
+        View decor = getWindow().getDecorView();
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container),true);
+        fade.excludeTarget(android.R.id.statusBarBackground,true);
+        fade.excludeTarget(android.R.id.navigationBarBackground,true);
+
+        getWindow().setEnterTransition(fade);
+        getWindow().setExitTransition(fade);
+
         txtProfName = findViewById(R.id.tv_EditprofName);
         txtProfEmail = findViewById(R.id.tv_EditProfEmail);
         txtProfPhone = findViewById(R.id.tv_EditprofPhone);
@@ -117,10 +129,15 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(view.getContext(),EditUserProfile.class);
+
+                //shared animation
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(UserProfile.this,profImage, ViewCompat.getTransitionName(profImage));
+
+
                 intent.putExtra("contact",txtProfPhone.getText().toString());
                 intent.putExtra("name",txtProfName.getText().toString());
                 intent.putExtra("email",txtProfEmail.getText().toString());
-                startActivity(intent);
+                startActivity(intent,options.toBundle());
 
 
 

@@ -32,7 +32,8 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/circle"
                 android:padding="3dp"
-                android:scaleType="centerInside" />
+                android:scaleType="centerInside"
+                android:transitionName="example_transition"/>
 
         </RelativeLayout>
 
@@ -128,7 +129,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="79dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="0dp"
@@ -144,7 +145,7 @@
                 <EditText
                     android:id="@+id/ed_editProfPhone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
                     android:fontFamily="sans-serif-light"
                     android:text="077123456"
                     android:textColor="#000000"
