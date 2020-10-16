@@ -30,13 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import io.paperdb.Paper;
 
 public class LoginActivity extends AppCompatActivity {
-//not working kindly check.......
-    //**
-        //**
-            //**
-                //**
-                    //**
-                        //**
+
     EditText login_contact, login_password;
     TextView txtAccountNav , txtNavigateShopAcc;
     Button btnLogin;
@@ -46,8 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     
 
-    private String parentDbName = "Users";
-    private CheckBox chkBoxRememberMe ;
+
 
 
     @Override
@@ -66,8 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         currentUser = fAuth.getCurrentUser();
-        chkBoxRememberMe = findViewById(R.id.chkBoxRememberMe);
-        Paper.init(this);
+
 
         txtNavigateShopAcc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,21 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void loginUser() {
-//        String contact = login_contact.getText().toString();
-//        String password = login_password.getText().toString();
-//
-//        if(TextUtils.isEmpty(contact)){
-//            Toast.makeText(this, "Please Enter your phone number",Toast.LENGTH_LONG).show();
-//        }else if(TextUtils.isEmpty(password)){
-//            Toast.makeText(this, "Please Enter your password",Toast.LENGTH_LONG).show();
-//        }else{
-//            loadingBar.setTitle("Login Account");
-//            loadingBar.setMessage("Please wait, while we are checking the account");
-//            loadingBar.setCanceledOnTouchOutside(false);
-//            loadingBar.show();
-//
-//            AllowAccessToAccount(contact, password);
-//        }
+
 
         String contact = login_contact.getText().toString().trim();
         String password = login_password.getText().toString().trim();
@@ -136,46 +114,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void AllowAccessToAccount(final String contact, String password) {
-//        final DatabaseReference RootRef;
-//        RootRef = FirebaseDatabase.getInstance().getReference();
-//
-//        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.child(parentDbName).child(contact).exists()){
-//                    Users usersData = dataSnapshot.child(parentDbName).child(contact).getValue(Users.class);
-//
-//                    if(usersData.getContact().equals(login_contact)){
-//                        if(usersData.getPassword().equals(login_password)){
-//                            Toast.makeText(LoginActivity.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-//
-//                            Intent intent =  new Intent(LoginActivity.this, HomeActivity.class);
-//                            startActivity(intent);
-//                            loadingBar.dismiss();
-//
-//                        }else{
-//                            loadingBar.dismiss();
-//                            Toast.makeText(LoginActivity.this, "Password is incorrect", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }else{
-//                    Toast.makeText(LoginActivity.this, "Account with this "+contact+ " number do not exists", Toast.LENGTH_SHORT).show();
-//                    loadingBar.dismiss();
-//                    Toast.makeText(LoginActivity.this, "You need to create an account", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
-        //this is not working
-        if(chkBoxRememberMe.isChecked()){
-           Paper.book().write(Prevalent.UserPhoneKey,contact);
-          Paper.book().write(Prevalent.UserPasswordKey,password);
-        }
+
 
         fAuth.signInWithEmailAndPassword(contact,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -184,8 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Logged in successfully",Toast.LENGTH_SHORT).show();
                     navigateHome();
                     loadingBar.dismiss();
-                    //need to check
-//                    Prevalent.CurrentOnlineUser  =  currentUser;
+
 
                 }
                 else{

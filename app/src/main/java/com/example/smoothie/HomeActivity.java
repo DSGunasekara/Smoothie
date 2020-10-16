@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 //import com.rey.material.widget.ImageView;
 //import com.bumptech.glide.Glide;
+
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -57,10 +60,14 @@ public class HomeActivity extends AppCompatActivity {
         FirestoreRecyclerOptions<Product> options = new FirestoreRecyclerOptions.Builder<Product>().setQuery(query, Product.class).build();
 
         adapter = new FirestoreRecyclerAdapter<Product, ProductsViewHolder>(options) {
+
             @NonNull
             @Override
             public ProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+
+
+
                 return new ProductsViewHolder(view);
             }
 
@@ -69,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.list_name.setText("Name: " + model.getName());
                 holder.list_price.setText("Price: " + model.getPrice());
                 holder.list_description.setText("Description: " + model.getDescription());
+                Picasso.get().load(model.getImage()).into(holder.imageM);
                 holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -76,6 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                         intent.putExtra("name", model.getName());
                         intent.putExtra("price", model.getPrice());
                         intent.putExtra("description", model.getDescription());
+
                         startActivity(intent);
                     }
                 });
@@ -115,15 +124,8 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(new Intent(HomeActivity.this, CartActivity.class));
                         break;
 
-//Paste your privacy policy link
 
-//                    case  R.id.nav_Policy:{
-//
-//                        Intent browserIntent  = new Intent(Intent.ACTION_VIEW , Uri.parse(""));
-//                        startActivity(browserIntent);
-//
-//                    }
-                    //       break;
+
                     case R.id.nav_share: {
 
                         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -168,14 +170,20 @@ public class HomeActivity extends AppCompatActivity {
         private TextView list_price;
         private TextView list_description;
         private RelativeLayout parentLayout;
+        private ImageView imageM ;
 
         public ProductsViewHolder(@NonNull View itemView) {
             super(itemView);
+
 
             list_name = itemView.findViewById(R.id.txtName);
             list_price = itemView.findViewById(R.id.txtPrice);
             list_description = itemView.findViewById(R.id.txtDescription);
             parentLayout = itemView.findViewById(R.id.parent_layout);
+            imageM = itemView.findViewById(R.id.product_image);
+
+
+
         }
     }
 
