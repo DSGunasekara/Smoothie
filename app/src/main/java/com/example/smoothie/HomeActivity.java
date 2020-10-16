@@ -87,6 +87,8 @@ public class HomeActivity extends AppCompatActivity {
                         intent.putExtra("price", model.getPrice());
                         intent.putExtra("description", model.getDescription());
 
+
+
                         startActivity(intent);
                     }
                 });
@@ -126,15 +128,6 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(new Intent(HomeActivity.this, CartActivity.class));
                         break;
 
-//Paste your privacy policy link
-
-//                    case  R.id.nav_Policy:{
-//
-//                        Intent browserIntent  = new Intent(Intent.ACTION_VIEW , Uri.parse(""));
-//                        startActivity(browserIntent);
-//
-//                    }
-                    //       break;
                     case R.id.nav_share: {
 
                         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -153,11 +146,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        //to retrieve name of the logged user in the navigation header // but this is not working :-(
-//        View HeaderView = navigationView.getHeaderView(0);
-//        TextView userNameTextView = HeaderView.findViewById(R.id.header_userName);
-
-        //updateNavHeader();
 
 
     }
