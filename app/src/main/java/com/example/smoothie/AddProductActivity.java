@@ -129,7 +129,7 @@ public class AddProductActivity extends AppCompatActivity {
                                     documentReference.set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "onSuccess: user profile is created for ");
+                                            Log.d(TAG, "onSuccess: hari bn  ");
                                             navigateProductList();
 
 

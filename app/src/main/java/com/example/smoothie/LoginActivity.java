@@ -136,13 +136,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void navigateRegister(){  
-        Intent intent1 = new Intent(this,RegisterUserActivity.class);
+        Intent intent1 = new Intent(this,ShopProductList.class);
         startActivity(intent1);
     }
 
 
     public void navigateHome(){
-        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+        startActivity(new Intent(LoginActivity.this,UserOrders.class));
 
     }
 

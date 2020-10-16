@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 
 public class ShopProductList extends AppCompatActivity {
 
@@ -79,6 +81,8 @@ public class ShopProductList extends AppCompatActivity {
                 holder.list_name.setText("Name: " + model.getName());
                 holder.list_price.setText("Price: " + model.getPrice());
                 holder.list_description.setText("Description: " + model.getDescription());
+                Picasso.get().load(model.getImage()).into(holder.imageM);
+
                 holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -86,6 +90,7 @@ public class ShopProductList extends AppCompatActivity {
                         intent.putExtra("name", model.getName());
                         intent.putExtra("price", model.getPrice());
                         intent.putExtra("description", model.getDescription());
+                        intent.putExtra("image", model.getImage());
                         startActivity(intent);
                     }
                 });
@@ -121,15 +126,6 @@ public class ShopProductList extends AppCompatActivity {
                         startActivity(new Intent(ShopProductList.this, LoginActivity.class));
                         break;
 
-//Paste your privacy policy link
-
-//                    case  R.id.nav_Policy:{
-//
-//                        Intent browserIntent  = new Intent(Intent.ACTION_VIEW , Uri.parse(""));
-//                        startActivity(browserIntent);
-//
-//                    }
-                    //       break;
                     case R.id.nav_share: {
 
                         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -148,11 +144,6 @@ public class ShopProductList extends AppCompatActivity {
         });
 
 
-        //to retrieve name of the logged user in the navigation header // but this is not working :-(
-//        View HeaderView = navigationView.getHeaderView(0);
-//        TextView userNameTextView = HeaderView.findViewById(R.id.header_userName);
-
-        //updateNavHeader();
 
 
     }
@@ -173,6 +164,7 @@ public class ShopProductList extends AppCompatActivity {
         private TextView list_name;
         private TextView list_price;
         private TextView list_description;
+        private ImageView imageM;
         private RelativeLayout parentLayout;
 
         public ProductsViewHolder(@NonNull View itemView) {
@@ -182,6 +174,7 @@ public class ShopProductList extends AppCompatActivity {
             list_price = itemView.findViewById(R.id.txtPrice);
             list_description = itemView.findViewById(R.id.txtDescription);
             parentLayout = itemView.findViewById(R.id.parent_layout);
+            imageM = itemView.findViewById(R.id.product_image);
         }
 
 

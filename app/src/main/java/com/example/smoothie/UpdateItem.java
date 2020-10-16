@@ -71,40 +71,7 @@ public class UpdateItem extends AppCompatActivity {
             }
         });
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if (editName.getText().toString().isEmpty() || editPrice.getText().toString().isEmpty() || editDescription.getText().toString().isEmpty()) {
-                    Toast.makeText(UpdateItem.this, "one or many fields are empty", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-
-                DocumentReference docRef = fStore.collection("item").document(name);
-
-                Map<String, Object> edited = new HashMap<>();
-                edited.put("name", editName.getText().toString());
-                edited.put("price", editPrice.getText().toString());
-                edited.put("description", editDescription.getText().toString());
-                edited.put("image", editProductImage.toString());
-
-                docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(UpdateItem.this, "Item updated", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                        finish();
-
-                    }
-
-
-                });
-
-
-            }
-
-        });
 
         editName.setText(name);
         editPrice.setText(price);
@@ -121,7 +88,67 @@ public class UpdateItem extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,1);
-//        sendposttodatabase();
+        sendposttodatabase();
+    }
+
+    private void sendposttodatabase() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                if (editName.getText().toString().isEmpty() || editPrice.getText().toString().isEmpty() || editDescription.getText().toString().isEmpty()) {
+                    Toast.makeText(UpdateItem.this, "one or many fields are empty", Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
+                final StorageReference filepath = storageReference.child("product_image").child(imageUri.getLastPathSegment());
+                filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Uri downloaduri = uri;
+
+
+                                String Name = editName.getText().toString();
+
+
+                                DocumentReference docRef = fStore.collection("item").document(Name);
+
+                                Map<String, Object> edited = new HashMap<>();
+                                edited.put("name", editName.getText().toString());
+                                edited.put("price", editPrice.getText().toString());
+                                edited.put("description", editDescription.getText().toString());
+                                edited.put("image", downloaduri.toString());
+
+                                docRef.update(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(UpdateItem.this, "Item updated", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                        finish();
+
+                                    }
+
+
+                                });
+
+
+                            }
+                        });
+
+
+                    }
+                });
+
+
+
+
+            }
+
+        });
     }
 
 
