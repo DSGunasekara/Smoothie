@@ -36,6 +36,7 @@ public class Item extends AppCompatActivity {
     private TextView name;
     private TextView price;
     private TextView description;
+//    private ImageView image;
 
     private Button btnDelete, btnUpdate;
 
@@ -55,6 +56,7 @@ public class Item extends AppCompatActivity {
         setContentView(R.layout.activity_item);
         name = findViewById(R.id.juiceName);
         price = findViewById(R.id.juicePrice);
+//        image = findViewById(R.id.product_image);
         description = findViewById(R.id.juiceDescription);
         btnDelete = findViewById(R.id.btnDelete);
         btnUpdate = findViewById(R.id.btnUpdate);
@@ -69,6 +71,7 @@ public class Item extends AppCompatActivity {
         name.setText( getIntent().getStringExtra("name"));
         price.setText( getIntent().getStringExtra("price"));
         description.setText( getIntent().getStringExtra("description"));
+
 
         Name = name.getText().toString();
         Log.d(TAG, "onCreate: "+Name);
