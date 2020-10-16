@@ -59,53 +59,32 @@ public class Item extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        Name = String.valueOf(name);
+
 
         prd = new Product();
 
+        name.setText( getIntent().getStringExtra("name"));
+        price.setText( getIntent().getStringExtra("price"));
+        description.setText( getIntent().getStringExtra("description"));
 
+        Name = name.getText().toString();
+        Log.d(TAG, "onCreate: "+Name);
         //Delete user profile
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseFirestore.getInstance().collection("item")
-                        .whereEqualTo("item", Name)
-                        .get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
-                                WriteBatch batch =  FirebaseFirestore.getInstance().batch();
-                                List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
-                                for(DocumentSnapshot snapshot: snapshots){
-                                    batch.delete(snapshot.getReference());
-                                }
-                                batch.commit()
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "onSuccess");
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e(TAG, "onFailure: ", e);
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
+                FirebaseFirestore.getInstance().collection("item").document(Name)
+                        .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(prd, "Data Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
 
 
-        name.setText( getIntent().getStringExtra("name"));
-        price.setText( getIntent().getStringExtra("price"));
-        description.setText( getIntent().getStringExtra("description"));
+
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,39 +100,10 @@ public class Item extends AppCompatActivity {
         });
 
 
-//        btnDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DatabaseReference delRef = FirebaseDatabase.getInstance().getReference().child("item");
-//                delRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        if(dataSnapshot.hasChild("name")){
-//                            dbRef = FirebaseDatabase.getInstance().getReference().child("item").child("name");
-//                            dbRef.removeValue();
-//
-//                            Toast.makeText(getApplicationContext(),"Data Deleted Successfully",Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            Toast.makeText(getApplicationContext(),"No Source to Delete",Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
-//            }
-//        });
-;
-//
-//        orderBtn.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//                orderBtn.setText("Added to cart");
-//            }
-//        });
+
     }
+
+
 
     private void navigateUpdateItem() {
         Intent intents = new Intent(this, UpdateItem.class);
