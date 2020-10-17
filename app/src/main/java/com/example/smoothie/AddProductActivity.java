@@ -98,9 +98,7 @@ public class AddProductActivity extends AppCompatActivity {
                 final String price = product_price.getText().toString().trim();
                 final String description = product_description.getText().toString().trim();
 
-
-
-
+                
                 if (TextUtils.isEmpty(name)){
                     Toast.makeText(AddProductActivity.this, "please enter name", Toast.LENGTH_SHORT).show();
                 }else if(TextUtils.isEmpty(price)){
@@ -201,6 +199,6 @@ public class AddProductActivity extends AppCompatActivity {
         product_name.setText("");
         product_price.setText("");
         product_description.setText("");
-//        product_image.setText("");
+
     }
 }

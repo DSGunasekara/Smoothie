@@ -68,9 +68,9 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull final ProductsViewHolder holder, int position, @NonNull final Product model) {
-                holder.list_name.setText("Name: " + model.getName());
-                holder.list_price.setText("Price: " + model.getPrice());
-                holder.list_description.setText("Description: " + model.getDescription());
+                holder.list_name.setText("Name : " + model.getName());
+                holder.list_price.setText("Price(LKR) : " + model.getPrice());
+                holder.list_description.setText("Description : " + model.getDescription());
                 Picasso.get().load(model.getImage()).into(holder.imageM);
                 holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override

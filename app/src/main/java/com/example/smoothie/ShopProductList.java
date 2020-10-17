@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,6 +65,8 @@ public class ShopProductList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 navigateAddProduct();
+                //shared animation
+//                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(ShopProductList.this, ViewCompat.getTransitionName());
             }
         });
 

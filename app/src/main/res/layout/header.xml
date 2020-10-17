@@ -3,7 +3,7 @@
     style="@style/ThemeOverlay.AppCompat.Dark"
     android:layout_width="match_parent"
     android:layout_height="172dp"
-    android:background="#0E0E0E"
+    android:background="@color/colorPrimary"
     android:padding="25dp">
 
     <TextView

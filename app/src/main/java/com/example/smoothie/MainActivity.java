@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smoothie.Prevalent.Prevalent;
@@ -25,15 +28,23 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnSqueeze;
     FirebaseAuth fAuth;
-
+    Animation bounce_anim;
+    TextView textView;
     Handler handler;
     Runnable runnable;
     ImageView imageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        textView = findViewById(R.id.registerUser);
+
+        bounce_anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce);
+        textView.startAnimation(bounce_anim);
 
         btnSqueeze = findViewById(R.id.btnSave);
         fAuth = FirebaseAuth.getInstance();
