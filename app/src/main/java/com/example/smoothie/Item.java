@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,8 +45,9 @@ public class Item extends AppCompatActivity {
 
     private String Name;
 
-    private FirebaseStorage storage;
-    private StorageReference storageReference;
+    private FirebaseFirestore fStore;
+
+    private FirebaseAuth fAuth;
 
     Product prd;
 
@@ -61,9 +63,17 @@ public class Item extends AppCompatActivity {
         btnDelete = findViewById(R.id.btnDelete);
         btnUpdate = findViewById(R.id.btnUpdate);
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
 
+//        fStore.collection("item").document(getIntent().getStringExtra("name"))
+//                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                com.example.smoothie.Model.Product product = documentSnapshot.toObject(com.example.smoothie.Model.Product.class);
+//                Picasso.get().load(product.getImage()).into(image);
+//            }
+//        });
 
 
         prd = new Product();
@@ -75,6 +85,9 @@ public class Item extends AppCompatActivity {
 
         Name = name.getText().toString();
         Log.d(TAG, "onCreate: "+Name);
+
+
+
         //Delete user profile
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +96,8 @@ public class Item extends AppCompatActivity {
                         .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(prd, "Data Deleted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(prd, "Data Deleted", Toast.LENGTH_LONG).show();
+                        navigaeShopList();
                     }
                 });
             }
@@ -109,6 +123,10 @@ public class Item extends AppCompatActivity {
 
     }
 
+    private void navigaeShopList() {
+        Intent intent_1 = new Intent(this, ShopProductList.class);
+        startActivity(intent_1);
+    }
 
 
     private void navigateUpdateItem() {

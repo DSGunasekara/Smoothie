@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 //import com.rey.material.widget.ImageView;
 //import com.bumptech.glide.Glide;
 
@@ -69,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
                 holder.list_name.setText("Name: " + model.getName());
                 holder.list_price.setText("Price: " + model.getPrice());
                 holder.list_description.setText("Description: " + model.getDescription());
+                Picasso.get().load(model.getImage()).into(holder.imageM);
                 holder.parentLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -171,6 +174,7 @@ public class HomeActivity extends AppCompatActivity {
         private TextView list_price;
         private TextView list_description;
         private RelativeLayout parentLayout;
+        private ImageView imageM;
 
         public ProductsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -178,6 +182,7 @@ public class HomeActivity extends AppCompatActivity {
             list_name = itemView.findViewById(R.id.txtName);
             list_price = itemView.findViewById(R.id.txtPrice);
             list_description = itemView.findViewById(R.id.txtDescription);
+            imageM = itemView.findViewById(R.id.product_image);
             parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }
