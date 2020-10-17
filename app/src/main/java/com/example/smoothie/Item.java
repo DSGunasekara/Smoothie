@@ -40,17 +40,10 @@ public class Item extends AppCompatActivity {
     private ImageView image;
 
     private Button btnDelete, btnUpdate;
-
-    DatabaseReference dbRef;
-
-    private String Name;
-
     private FirebaseFirestore fStore;
-
     private FirebaseAuth fAuth;
 
     Product prd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +59,7 @@ public class Item extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
 
+        //to get image
         fStore.collection("item").document(getIntent().getStringExtra("name"))
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -76,35 +70,25 @@ public class Item extends AppCompatActivity {
         });
 
 
-
         prd = new Product();
 
         name.setText("Name : " + getIntent().getStringExtra("name"));
         price.setText("Price(LKR) : " + getIntent().getStringExtra("price"));
         description.setText("Description : " + getIntent().getStringExtra("description"));
 
-
-        Name = name.getText().toString();
-        Log.d(TAG, "onCreate: "+Name);
-
-
-
-        //Delete user profile
+        //Delete
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseFirestore.getInstance().collection("item").document(Name)
+                FirebaseFirestore.getInstance().collection("item").document(getIntent().getStringExtra("name"))
                         .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(prd, "Data Deleted", Toast.LENGTH_LONG).show();
                         navigaeShopList();
                     }
                 });
             }
         });
-
-
 
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -122,9 +106,6 @@ public class Item extends AppCompatActivity {
 
             }
         });
-
-
-
     }
 
     private void navigaeShopList() {
@@ -132,9 +113,4 @@ public class Item extends AppCompatActivity {
         startActivity(intent_1);
     }
 
-
-    private void navigateUpdateItem() {
-        Intent intents = new Intent(this, UpdateItem.class);
-        startActivity(intents);
-    }
 }

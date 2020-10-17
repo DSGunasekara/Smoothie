@@ -34,15 +34,13 @@ public class UpdateItem extends AppCompatActivity {
 
     public static final String TAG = "TAG";
     EditText editName, editPrice, editDescription;
-//    ImageView editProductImage;
     Button btnSave;
     private FirebaseFirestore fStore;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Uri imageUri;
     private ImageView editProductImage;;
-
-
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -54,14 +52,13 @@ public class UpdateItem extends AppCompatActivity {
         final String name = data.getStringExtra("name");
         String price = data.getStringExtra("price");
         String description = data.getStringExtra("description");
-//        String imageUri = data.getStringExtra("image");
-
 
         editName = findViewById(R.id.txtName);
         editPrice = findViewById(R.id.txtPrice);
         editDescription = findViewById(R.id.txtDescription);
         btnSave = findViewById(R.id.btn_save);
         editProductImage = findViewById(R.id.EditProductImage);
+        progressDialog = new ProgressDialog(this);
 
         fStore = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -83,16 +80,11 @@ public class UpdateItem extends AppCompatActivity {
             }
         });
 
-
-
         editName.setText(name);
         editPrice.setText(price);
         editDescription.setText(description);
-//        editProductImage.setImageURI(Uri.parse(imageUri));
 
         Log.d(TAG, "onCreate: " + name + " " + price + " " + description + " " + imageUri);
-
-
 
     }
     private void openGallery(){
@@ -109,11 +101,15 @@ public class UpdateItem extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 if (editName.getText().toString().isEmpty() || editPrice.getText().toString().isEmpty() || editDescription.getText().toString().isEmpty()) {
                     Toast.makeText(UpdateItem.this, "one or many fields are empty", Toast.LENGTH_SHORT).show();
                     return;
 
                 }
+                progressDialog.setMessage("Posting to database");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
                 final StorageReference filepath = storageReference.child("product_image").child(imageUri.getLastPathSegment());
                 filepath.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -125,7 +121,6 @@ public class UpdateItem extends AppCompatActivity {
 
 
                                 String Name = editName.getText().toString();
-
 
                                 DocumentReference docRef = fStore.collection("item").document(Name);
 
@@ -155,9 +150,6 @@ public class UpdateItem extends AppCompatActivity {
                     }
                 });
 
-
-
-
             }
 
         });
@@ -173,8 +165,8 @@ public class UpdateItem extends AppCompatActivity {
             uploadPicture();
         }
     }
-    private void uploadPicture() {
 
+    private void uploadPicture() {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setTitle("Uploading Image....");
         pd.show();
