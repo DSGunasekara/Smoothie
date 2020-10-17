@@ -17,14 +17,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,12 +34,15 @@ public class UpdateItem extends AppCompatActivity {
 
     public static final String TAG = "TAG";
     EditText editName, editPrice, editDescription;
-    ImageView editProductImage;
+//    ImageView editProductImage;
     Button btnSave;
     private FirebaseFirestore fStore;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private Uri imageUri;
+    private ImageView editProductImage;;
+
+
 
 
     @Override
@@ -63,6 +66,15 @@ public class UpdateItem extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        fStore.collection("item").document(getIntent().getStringExtra("name"))
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                com.example.smoothie.Model.Product product = documentSnapshot.toObject(com.example.smoothie.Model.Product.class);
+                Picasso.get().load(product.getImage()).into(editProductImage);
+            }
+        });
 
         editProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +139,7 @@ public class UpdateItem extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(UpdateItem.this, "Item updated", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                        startActivity(new Intent(getApplicationContext(), ShopProductList.class));
                                         finish();
 
                                     }

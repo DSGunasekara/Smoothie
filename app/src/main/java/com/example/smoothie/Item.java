@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.rey.material.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class Item extends AppCompatActivity {
     private TextView name;
     private TextView price;
     private TextView description;
-//    private ImageView image;
+    private ImageView image;
 
     private Button btnDelete, btnUpdate;
 
@@ -58,7 +58,7 @@ public class Item extends AppCompatActivity {
         setContentView(R.layout.activity_item);
         name = findViewById(R.id.juiceName);
         price = findViewById(R.id.juicePrice);
-//        image = findViewById(R.id.product_image);
+        image = findViewById(R.id.product_image_shop);
         description = findViewById(R.id.juiceDescription);
         btnDelete = findViewById(R.id.btnDelete);
         btnUpdate = findViewById(R.id.btnUpdate);
@@ -66,21 +66,22 @@ public class Item extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
 
-//        fStore.collection("item").document(getIntent().getStringExtra("name"))
-//                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                com.example.smoothie.Model.Product product = documentSnapshot.toObject(com.example.smoothie.Model.Product.class);
-//                Picasso.get().load(product.getImage()).into(image);
-//            }
-//        });
+        fStore.collection("item").document(getIntent().getStringExtra("name"))
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                com.example.smoothie.Model.Product product = documentSnapshot.toObject(com.example.smoothie.Model.Product.class);
+                Picasso.get().load(product.getImage()).into(image);
+            }
+        });
+
 
 
         prd = new Product();
 
-        name.setText( getIntent().getStringExtra("name"));
-        price.setText( getIntent().getStringExtra("price"));
-        description.setText( getIntent().getStringExtra("description"));
+        name.setText("Name : " + getIntent().getStringExtra("name"));
+        price.setText("Price(LKR) : " + getIntent().getStringExtra("price"));
+        description.setText("Description : " + getIntent().getStringExtra("description"));
 
 
         Name = name.getText().toString();
@@ -109,6 +110,9 @@ public class Item extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                name.setText( getIntent().getStringExtra("name"));
+                price.setText(getIntent().getStringExtra("price"));
+                description.setText(getIntent().getStringExtra("description"));
 
                 Intent intent = new Intent(v.getContext(),UpdateItem.class);
                 intent.putExtra("name",name.getText().toString());
