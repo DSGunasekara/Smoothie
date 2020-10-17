@@ -54,4 +54,5 @@
     <string name="hintShopPassword">shop password</string>
     <string name="btnShopLoginLabel">shopLogin</string>
     <string name="home">home</string>
+    <string name="collect_your_order">Collect your order</string>
 </resources>

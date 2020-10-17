@@ -90,7 +90,7 @@ public class ShopProductList extends AppCompatActivity {
                         intent.putExtra("name", model.getName());
                         intent.putExtra("price", model.getPrice());
                         intent.putExtra("description", model.getDescription());
-                        intent.putExtra("image", model.getImage());
+//                        intent.putExtra("image", model.getImage());
                         startActivity(intent);
                     }
                 });
@@ -175,6 +175,7 @@ public class ShopProductList extends AppCompatActivity {
             list_description = itemView.findViewById(R.id.txtDescription);
             parentLayout = itemView.findViewById(R.id.parent_layout);
             imageM = itemView.findViewById(R.id.product_image);
+
         }
 
 
