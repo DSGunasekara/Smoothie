@@ -6,23 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ShopLoginActivity">
 
-    <EditText
-        android:id="@+id/txtLogPassword"
-        android:layout_width="384dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="@string/logPassword"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLogEmail"
-        app:layout_constraintVertical_bias="0.0" />
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="443dp"
@@ -81,6 +64,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLoginLable"
         app:layout_constraintVertical_bias="0.125" />
+    <EditText
+        android:id="@+id/txtLogPassword"
+        android:layout_width="384dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/logPassword"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLogEmail"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnLoginShopLabel"
