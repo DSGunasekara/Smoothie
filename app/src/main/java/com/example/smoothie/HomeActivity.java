@@ -118,6 +118,9 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_Profile:
                         startActivity(new Intent(HomeActivity.this, UserProfile.class));
                         break;
+                    case R.id.nav_pending_orders:
+                        startActivity(new Intent(HomeActivity.this ,UserOrders.class));
+                        break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(HomeActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();

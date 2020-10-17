@@ -14,6 +14,10 @@
             android:icon="@drawable/ic_baseline_shopping_cart_24"
             android:title="cart">
         </item>
+        <item android:id="@+id/nav_pending_orders"
+            android:icon="@drawable/ic_pending_order"
+            android:title="Pending Orders">
+        </item>
 
         <item android:id="@+id/nav_logout"
             android:icon="@drawable/ic_baseline_close_24"
