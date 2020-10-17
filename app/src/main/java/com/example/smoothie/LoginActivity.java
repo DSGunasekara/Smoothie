@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void navigateHome(){
-        startActivity(new Intent(LoginActivity.this,UserOrders.class));
+        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
 
     }
 

@@ -119,15 +119,18 @@ public class ShopOrderList extends AppCompatActivity {
                     case R.id.nav_Profile:
                         startActivity(new Intent(ShopOrderList.this, ShopProfileActivity.class));
                         break;
+                    case R.id.nav_pending_orders:
+                        startActivity(new Intent(ShopOrderList.this, ShopOrderList.class));
+                        break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(ShopOrderList.this, "Logged Out", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ShopOrderList.this, LoginActivity.class));
                         break;
 
-                    case R.id.nav_previousOrders:
-                        startActivity(new Intent(ShopOrderList.this, ShopOrderList.class));
-                        break;
+//                    case R.id.nav_previousOrders:
+//                        startActivity(new Intent(ShopOrderList.this, ShopOrderList.class));
+//                        break;
 
 //Paste your privacy policy link
 

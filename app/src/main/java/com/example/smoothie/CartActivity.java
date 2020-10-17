@@ -111,9 +111,13 @@ public class CartActivity extends AppCompatActivity {
                     for(int i = 0; i < orders.size(); i++){
                         tot += orders.get(i).getTotAmount();
                         Log.d(TAG, "onClick: order " +orders.get(i));
-//                        Order order1 = orders.get(i);
-//                        fStore.collection("order").document(orders.get(0).getOrderId()).update("orderList", FieldValue.arrayUnion(order1));
                     }
+
+                    if(tot == 0){
+                        Toast.makeText(CartActivity.this, "Please select some items first", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     Map<String, Object> orderDetails = new HashMap<>();
                     orderDetails.put("totalAmount", Long.toString(tot));
                     orderDetails.put("userId", orders.get(0).getUserId());
@@ -122,7 +126,6 @@ public class CartActivity extends AppCompatActivity {
                     orderDetails.put("userEmail", user.getEmail());
                     orderDetails.put("orderList", orders);
                     fStore.collection("order").document(orders.get(0).getOrderId()).set(orderDetails);
-//                    fStore.collection("order").document(orders.get(0).getOrderId()).update("orderList", FieldValue.arrayUnion(Arrays.asList(orders)));
                     Log.d(TAG, "onClick: Total "+ tot);
                     orderBtn.setText("Ordered");
 //                    status.setText("Status: Ready");
@@ -145,7 +148,6 @@ public class CartActivity extends AppCompatActivity {
                     }
 
                     Toast.makeText(CartActivity.this, "Order Placed", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(CartActivity.this, HomeActivity.class));
                 }else{
                     Toast.makeText(CartActivity.this, "Order Placed already", Toast.LENGTH_SHORT).show();
                 }
@@ -167,6 +169,9 @@ public class CartActivity extends AppCompatActivity {
 
                     case R.id.nav_Profile:
                         startActivity(new Intent(CartActivity.this, UserProfile.class));
+                        break;
+                    case R.id.nav_pending_orders:
+                        startActivity(new Intent(CartActivity.this, UserOrders.class));
                         break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
@@ -199,9 +204,6 @@ public class CartActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-//        Log.d(TAG, "onCreate: data", orders.get(0));
 
 
     }

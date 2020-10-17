@@ -124,12 +124,12 @@ public class UserOrders extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
 
-                        Intent intent = new Intent(UserOrders.this, ShopProductList.class);
+                        Intent intent = new Intent(UserOrders.this, HomeActivity.class);
                         startActivity(intent);
                         break;
 
                     case R.id.nav_Profile:
-                        startActivity(new Intent(UserOrders.this, ShopProfileActivity.class));
+                        startActivity(new Intent(UserOrders.this, UserProfile.class));
                         break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
@@ -138,9 +138,10 @@ public class UserOrders extends AppCompatActivity {
                         break;
 
                     case R.id.nav_previousOrders:
-                        startActivity(new Intent(UserOrders.this, UserOrders.class));
+                        startActivity(new Intent(UserOrders.this, CartActivity.class));
                         break;
-
+                    case R.id.nav_pending_orders:
+                        startActivity(new Intent(UserOrders.this, UserOrders.class));
 //Paste your privacy policy link
 
 //                    case  R.id.nav_Policy:{

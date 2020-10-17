@@ -120,6 +120,9 @@ public class ShopProductList extends AppCompatActivity {
                     case R.id.nav_Profile:
                         startActivity(new Intent(ShopProductList.this, ShopProfileActivity.class));
                         break;
+                    case R.id.nav_pending_orders:
+                        startActivity(new Intent(ShopProductList.this, ShopOrderList.class));
+                        break;
                     case R.id.nav_logout:
                         FirebaseAuth.getInstance().signOut();
                         Toast.makeText(ShopProductList.this, "Logged Out", Toast.LENGTH_SHORT).show();
