@@ -77,8 +77,35 @@ public class UserOrders extends AppCompatActivity {
 
                 if(model.isReady() == false){
                     holder.list_ready.setText("Status: Order not complete");
+                    holder.collectBtn.setText("Wait For Your Order");
+                    holder.collectBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(UserOrders.this, "Wait till we finish your order!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }else{
                     holder.list_ready.setText("Status: Order Complete");
+                    holder.collectBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            firebaseFirestore.collection("order").document(model.getOrderId())
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(UserOrders.this, "Order Collected",Toast.LENGTH_SHORT).show();
+                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error deleting document", e);
+                                        }
+                                    });
+                        }
+                    });
                 }
 
                 holder.list_name.setText("User Email: " + model.getUserEmail());
@@ -86,25 +113,7 @@ public class UserOrders extends AppCompatActivity {
                 holder.list_orderId.setText("Order Id: " + model.getOrderId());
 //                holder.collectBtn.setText("Co");
 
-                holder.collectBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                       firebaseFirestore.collection("order").document(model.getOrderId())
-                               .delete()
-                               .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                   @Override
-                                   public void onSuccess(Void aVoid) {
-                                       Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                   }
-                               })
-                               .addOnFailureListener(new OnFailureListener() {
-                                   @Override
-                                   public void onFailure(@NonNull Exception e) {
-                                       Log.w(TAG, "Error deleting document", e);
-                                   }
-                               });
-                    }
-                });
+
             }
         };
 
