@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserOrders"></activity>
+        <activity android:name=".ShopUpdate"></activity>
+        <activity android:name=".UserOrders" />
         <activity android:name=".ShopOrderList" />
         <activity android:name=".ShopOrders" />
         <activity android:name=".CartActivity" />

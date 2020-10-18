@@ -56,4 +56,16 @@
     <string name="home">home</string>
     <string name="collect_your_order">Collect your order</string>
     <string name="add_image">Add Image</string>
+    <string name="alert_yes">Yes</string>
+    <string name="alert_no">Cancel</string>
+    <string name="shopName">Roots</string>
+    <string name="shopLocation">Malabe</string>
+    <string name="txtShopProOwnerName">Name</string>
+    <string name="txtShopLoginLabel">Shop name</string>
+    <string name="lblShopUpdateName">"Shop name : "</string>
+    <string name="lblShopUpdateOwName">Owner name :</string>
+    <string name="lblShopUpdatePhone">Contact number :</string>
+    <string name="lblShopUpdateEmail">Email :</string>
+    <string name="lblShopUpdateLocation">Location :</string>
+    <string name="btnShopUpdateSave">Save</string>
 </resources>

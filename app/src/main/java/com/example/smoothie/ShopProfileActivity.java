@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,13 +32,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.rey.material.widget.ImageButton;
 import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ShopProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
+    CircleImageView imgLogo;
     TextView appName, shopName, shopLocation, ownerName, shopEmail, shopPhone;
-    ImageView logo;
+    ImageView btnEditShopAccount, btnDelete, btnHome;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
@@ -53,41 +59,34 @@ public class ShopProfileActivity extends AppCompatActivity {
         ownerName = findViewById(R.id.txtOwnerLabel);
         shopEmail = findViewById(R.id.txtEmailLabel);
         shopPhone = findViewById(R.id.txtPhoneLabel);
-        logo = findViewById(R.id.imgLogo);
+        btnEditShopAccount = findViewById(R.id.btnEditShopAccount);
+        btnDelete = findViewById(R.id.btnDelete);
+        btnHome = findViewById(R.id.btnHome);
+        imgLogo = findViewById(R.id.imgLogo);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        //create directory in firebase storage with user ID
-//        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
-//        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Picasso.get().load(uri).into(logo);
-//
-//            }
-//        });
+
 
         userID = fAuth.getCurrentUser().getUid();
+        Log.d(TAG, "onCreate: User" + userID);
 
-//        DocumentReference documentReference = fStore.collection("shop owners").document(shopName.toString());
-//        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-//                if(documentSnapshot.exists()) {
-//                    ownerName.setText(documentSnapshot.getString("owner"));
-//                    shopEmail.setText(documentSnapshot.getString("email"));
-//                    shopPhone.setText(documentSnapshot.getString("phone"));
-//                    shopName.setText(documentSnapshot.getString("name"));
-//                    shopLocation.setText(documentSnapshot.getString("location"));
-//                }else{
-//                    Log.d("tag","onEvent: document do not exists");
-//                }
-//
-//
-//            }
-//        });
+        StorageReference profileRef = storageReference.child("/users/"+userID+"/download.jpg");
+        Log.d(TAG, "onCreate: storage" + profileRef);
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d(TAG, "onSuccess: Image"+uri);
+                Picasso.get().load(uri).into(imgLogo);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d(TAG, "onFailure: "+ exception);
+            }
+        });
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -101,11 +100,11 @@ public class ShopProfileActivity extends AppCompatActivity {
                             Log.d(TAG, "onComplete: dfdlfjdsfhdslsdilfhsdiofds" + user.getEmail());
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                ownerName.setText("Owner:"+(String)document.get("owner name"));
-                                shopEmail.setText("Email "+(String)document.get("email"));
-                                shopPhone.setText("Phone: "+(String)document.get("phone"));
-                                shopName.setText("Name: "+(String)document.get("Shop name"));
-                                shopLocation.setText("Location: "+(String)document.get("location"));
+                                ownerName.setText((String)document.get("owner name"));
+                                shopEmail.setText((String)document.get("email"));
+                                shopPhone.setText((String)document.get("phone"));
+                                shopName.setText((String)document.get("Shop name"));
+                                shopLocation.setText((String)document.get("location"));
 
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                             }
@@ -116,27 +115,81 @@ public class ShopProfileActivity extends AppCompatActivity {
                 });
 
 
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_2 = new Intent(ShopProfileActivity.this, ShopProductList.class);
+                startActivity(intent_2);
+            }
+        });
 
-       /* btnEditProfile.setOnClickListener(new View.OnClickListener() {
+        btnEditShopAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(view.getContext(),EditUserProfile.class);
+                Intent intent = new Intent(view.getContext(), ShopUpdate.class);
+
+                intent.putExtra("userId",userID);
+                intent.putExtra("phone", shopPhone.getText().toString());
+                intent.putExtra("Shop name", shopName.getText().toString());
+                intent.putExtra("email", shopEmail.getText().toString());
+                intent.putExtra("location", shopLocation.getText().toString());
+                intent.putExtra("owner name", ownerName.getText().toString());
+
                 startActivity(intent);
 
-                intent.putExtra("contact",txtProfPhone.getText().toString());
-                intent.putExtra("name",txtProfName.getText().toString());
-                intent.putExtra("email",txtProfEmail.getText().toString());
-
-                //open Gallery
-//                Intent openGalleryIntent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(openGalleryIntent,1000);
             }
-        });*/
 
-
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAccount();
+            }
+        });
 
     }
+
+    private void deleteAccount() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage("Are you sure you want to delete this file ?")
+                .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Log.i("MainActivity", "You choose Yes");
+
+                        Log.d(TAG, "Account Deleted");
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                        final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                        currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "OK! Works fine!");
+                                    startActivity(new Intent(ShopProfileActivity.this, MainActivity.class));
+                                    finish();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "hari ", e);
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i("MainActivity", "You choose No");
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -154,8 +207,7 @@ public class ShopProfileActivity extends AppCompatActivity {
     }
 
     private void uploadImageToFirebase(Uri imageUri) {
-        //in this we are overwrite same image with new one because user can only have one profile image
-        //upload image to firebase storage
+
         final StorageReference fileRef = storageReference.child("users/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -164,7 +216,7 @@ public class ShopProfileActivity extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(logo);
+                        Picasso.get().load(uri).into(imgLogo);
 
 
                     }

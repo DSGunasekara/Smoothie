@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,6 +79,7 @@ public class UserOrders extends AppCompatActivity {
                 if(model.isReady() == false){
                     holder.list_ready.setText("Status: Order not complete");
                     holder.collectBtn.setText("Wait For Your Order");
+                    holder.list_ready.setTextColor(Color.parseColor("#FF0044"));
                     holder.collectBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -86,6 +88,7 @@ public class UserOrders extends AppCompatActivity {
                     });
                 }else{
                     holder.list_ready.setText("Status: Order Complete");
+                    holder.list_ready.setTextColor(Color.parseColor("#32CD32"));
                     holder.collectBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

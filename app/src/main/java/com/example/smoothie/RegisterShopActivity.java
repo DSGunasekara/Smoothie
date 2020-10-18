@@ -145,7 +145,7 @@ public class RegisterShopActivity extends AppCompatActivity {
 
                 });
 
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                startActivity(new Intent(getApplicationContext(), ShopProductList.class));
 
 
             }

@@ -3,6 +3,8 @@ package com.example.smoothie;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +43,7 @@ public class Item extends AppCompatActivity {
     private TextView price;
     private TextView description;
     private ImageView image;
+    private AlertDialog alertDialog;
 
     private Button btnDelete, btnUpdate;
     private FirebaseFirestore fStore;
@@ -75,20 +81,13 @@ public class Item extends AppCompatActivity {
         name.setText("Name : " + getIntent().getStringExtra("name"));
         price.setText("Price(LKR) : " + getIntent().getStringExtra("price"));
         description.setText("Description : " + getIntent().getStringExtra("description"));
-
-        //Delete
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseFirestore.getInstance().collection("item").document(getIntent().getStringExtra("name"))
-                        .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        navigaeShopList();
-                    }
-                });
+                deleteItem();
             }
         });
+
 
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +110,35 @@ public class Item extends AppCompatActivity {
     private void navigaeShopList() {
         Intent intent_1 = new Intent(this, ShopProductList.class);
         startActivity(intent_1);
+    }
+
+    private void deleteItem() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage("Are you sure you want to delete this file ?")
+                .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Log.i("MainActivity", "You choose Yes");
+
+                        FirebaseFirestore.getInstance().collection("item").document(getIntent().getStringExtra("name"))
+                                .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                navigaeShopList();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i("MainActivity", "You choose No");
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 }

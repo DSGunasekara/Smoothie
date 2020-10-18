@@ -8,6 +8,8 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,12 +51,14 @@ public class UserProfile extends AppCompatActivity {
     public static final String TAG = "TAG";
     CircleImageView profImage;
     TextView txtProfName, txtProfEmail, txtProfPhone;
-    ImageView btnEditProfile , btnDeleteProfile;
+    ImageView btnEditProfile , btnDeleteProfile, btnHome;
     FirebaseAuth fAuth;
     //FirebaseDatabase firebaseDatabase;
     FirebaseFirestore fStore;
     String userID;
     StorageReference storageReference;
+    private AlertDialog alertDialog;
+
 
     String EMAIL;
 
@@ -83,6 +87,7 @@ public class UserProfile extends AppCompatActivity {
         profImage = findViewById(R.id.iv_EditprofImage);
         btnEditProfile = findViewById(R.id.btnEditProfile);
         btnDeleteProfile = findViewById(R.id.btnDelete);
+        btnHome = findViewById(R.id.btnHome);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -90,7 +95,7 @@ public class UserProfile extends AppCompatActivity {
 
         EMAIL = String.valueOf(txtProfEmail);
 
-        //create directory in firebase storage with user ID
+//        create directory in firebase storage with user ID
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 
@@ -147,47 +152,6 @@ public class UserProfile extends AppCompatActivity {
         });
 
 
-
-
-
-        //Delete user profile
-//        btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FirebaseFirestore.getInstance().collection("Users")
-//                        .whereEqualTo("email", EMAIL)
-//                        .get()
-//                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                            @Override
-//                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//
-//                                WriteBatch batch =  FirebaseFirestore.getInstance().batch();
-//                                List<DocumentSnapshot> snapshots = queryDocumentSnapshots.getDocuments();
-//                                for(DocumentSnapshot snapshot: snapshots){
-//                                    batch.delete(snapshot.getReference());
-//                                }
-//                                batch.commit()
-//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                            @Override
-//                                            public void onSuccess(Void aVoid) {
-//                                                Log.d(TAG, "onSuccess: Delete all docs with email = email");
-//                                            }
-//                                        }).addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.e(TAG, "onFailure: ", e);
-//                                    }
-//                                });
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//
-//                    }
-//                });
-//            }
-//        });
-
         btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,32 +159,56 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
-
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_4 = new Intent(UserProfile.this, HomeActivity.class);
+                startActivity(intent_4);
+            }
+        });
 
 
 
 
     }
     private void deleteAccount() {
-        Log.d(TAG, "Account Deleted");
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage("Are you sure you want to delete this file ?")
+                .setPositiveButton(R.string.alert_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-        currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d(TAG,"OK! Works fine!");
-                    startActivity(new Intent(UserProfile.this, MainActivity.class));
-                    finish();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG,"Ocurrio un error durante la eliminación del usuario", e);
-            }
-        });
+                        Log.i("MainActivity", "You choose Yes");
+
+                        Log.d(TAG, "Account Deleted");
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                        final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                        currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "OK! Works fine!");
+                                    startActivity(new Intent(UserProfile.this, MainActivity.class));
+                                    finish();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "wada na bn ", e);
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(R.string.alert_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i("MainActivity", "You choose No");
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 

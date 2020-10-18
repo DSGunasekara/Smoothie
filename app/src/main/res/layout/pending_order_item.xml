@@ -5,7 +5,7 @@
     android:padding="15dp"
     android:id="@+id/shop_parent_layout"
     android:layout_margin="10dp"
-    android:background="#D3D3D3"
+    android:background="@drawable/item_card"
     >
     <TextView
         android:id="@+id/shopTxtName"

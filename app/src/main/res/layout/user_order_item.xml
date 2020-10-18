@@ -5,7 +5,8 @@
     android:padding="15dp"
     android:id="@+id/user_order_item_list"
     android:layout_margin="10dp"
-    android:background="#D3D3D3"
+    android:background="@drawable/item_card"
+
     >
     <TextView
         android:id="@+id/shopTxtName"
@@ -45,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/shopTxtReady"
-        android:background="@color/colorAccent"
+        android:background="@drawable/blue_button"
         android:textAllCaps="false"
         android:textColor="#FFF"
         android:padding="5dp"
